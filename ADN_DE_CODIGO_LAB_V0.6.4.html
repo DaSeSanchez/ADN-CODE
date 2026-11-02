@@ -1,0 +1,1133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ADN de Código · Laboratorio genético V0.6.4</title>
+<style>
+:root{color-scheme:dark;--bg:#080d17;--panel:#101a29;--panel2:#142236;--stroke:#29384b;--text:#eaf2fc;--muted:#9bacc4;--aqua:#6ce5d2;--gold:#ffd081;--red:#fa8794;--green:#a1e1b7;--shadow:0 18px 50px #02040a65}
+*{box-sizing:border-box}html{background:var(--bg)}body{font-family:Inter,system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;margin:0;background:radial-gradient(ellipse at top center,#123448 0,#0c1727 34%,#080d17 75%);color:var(--text);min-height:100vh}
+button,input{font:inherit}button{cursor:pointer}button:disabled{opacity:.48;cursor:not-allowed} .shell{max-width:1180px;margin:auto;padding:23px clamp(13px,3vw,34px) 55px}
+header{display:flex;justify-content:space-between;align-items:start;gap:12px;margin:5px 0 23px} .eyebrow{letter-spacing:.16em;text-transform:uppercase;color:var(--aqua);font-weight:800;font-size:.68rem}.logo{display:flex;align-items:center;gap:12px}.logo-icon{display:grid;place-items:center;border-radius:13px;background:#173a46;border:1px solid #3a7179;color:#85f1e2;font-size:27px;width:48px;height:48px}.hero h1{font-size:clamp(1.9rem,4vw,2.75rem);margin:4px 0 9px;letter-spacing:-.055em;line-height:1.06}.hero p{color:var(--muted);line-height:1.6;margin:0;max-width:840px;font-size:.93rem}.version{color:#95b6c5;border:1px solid #2d4950;padding:8px 10px;border-radius:999px;background:#11262e;white-space:nowrap;font-size:.73rem;font-weight:700}
+.card{background:linear-gradient(180deg,#121f30ef,#0d1727f5);border:1px solid var(--stroke);border-radius:18px;padding:clamp(14px,2.4vw,23px);box-shadow:var(--shadow);min-width:0}.layout{display:grid;grid-template-columns:minmax(320px,.98fr) minmax(390px,1.02fr);gap:17px;align-items:start}.stack{display:grid;gap:16px}.section-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 0 15px}.section-head h2{font-size:1.05rem;letter-spacing:-.025em;margin:0}.muted{color:var(--muted)}.small{font-size:.79rem}.overline{font-size:.66rem;color:#9ab1c7;letter-spacing:.13em;font-weight:800;text-transform:uppercase} .form-label{font-size:.75rem;color:#b1c1d6;font-weight:700;margin:0 0 7px;display:block}.field{display:flex;align-items:stretch;gap:7px}.field input{color:#f3f8ff;min-width:0;flex:1;background:#07111d;border:1px solid #31445a;padding:13px 12px;border-radius:11px;letter-spacing:.07em;font-weight:700;outline:none;font-variant-numeric:tabular-nums}.field input:focus{border-color:#6ce5d2;box-shadow:0 0 0 2px #6ce5d223}.btn{border:1px solid #356174;background:#193548;color:#bfeee8;border-radius:10px;font-weight:750;padding:11px 12px;transition:background .18s;font-size:.82rem}.btn:hover{background:#22495b}.btn-main{background:#70e3cf;color:#0e2a31;border-color:#9af0df}.btn-main:hover{background:#92f2e0}.btn-icon{width:42px;padding:0;display:grid;place-items:center;font-size:1.1rem}.actions{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}.actions .btn{flex:1;min-width:88px}.result{border:1px solid #345648;background:#15332777;border-radius:10px;color:#c1eaca;padding:10px 12px;font-size:.8rem;line-height:1.5;margin-top:11px}.result.error{color:#ffc0c8;border-color:#5f3844;background:#3c202c88}.result.warn{color:#ffdf9d;border-color:#78603a;background:#48391c66}.settings{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:13px}.chip{display:inline-flex;gap:6px;align-items:center;padding:6px 9px;border-radius:999px;background:#162a3b;color:#9fd3d4;border:1px solid #315365;font-size:.71rem;font-weight:700}.rarity{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:15px 16px;margin:15px 0 0;border-radius:12px;border:1px solid #4a4e6f;background:linear-gradient(90deg,#283048,#182c36)}.rarity strong{font-size:1.45rem;display:block;letter-spacing:-.03em}.rarity small{display:block;color:#b7c6d9;margin-top:2px;font-size:.74rem}.rarity .mult{font-weight:900;font-variant-numeric:tabular-nums;font-size:1.4rem;color:#d5ddfd}.rarity[data-tier="0"]{border-color:#687689}.rarity[data-tier="1"]{border-color:#4e9669}.rarity[data-tier="2"]{border-color:#4f92df}.rarity[data-tier="3"]{border-color:#9b74e2}.rarity[data-tier="4"]{border-color:#d9a447;background:linear-gradient(90deg,#3c301e,#182b36)}.rarity[data-tier="5"]{border-color:#f279ad;background:linear-gradient(90deg,#42213d,#152d38)}
+.iv-stars{margin-top:12px;padding:15px 16px;border-radius:12px;border:1px solid #75603a;background:linear-gradient(110deg,#302818,#152332)}.iv-stars .iv-top{display:flex;justify-content:space-between;gap:12px;align-items:center}.iv-stars h3{margin:4px 0 0;font-size:1rem;letter-spacing:-.02em}.iv-stars .iv-result{font-size:1.05rem;font-weight:850;color:#ffe7a9;font-variant-numeric:tabular-nums}.iv-symbols{display:flex;gap:3px;flex-wrap:nowrap;align-items:center;margin:10px 0 7px;font-size:clamp(23px,4vw,35px);line-height:1}.iv-symbols .lit{color:#ffd06f;text-shadow:0 1px 14px #ffd06f38}.iv-symbols .off{color:#536071}.iv-symbols span{display:inline-block}.iv-stars .iv-explainer{margin:0;color:#b8c7d9;line-height:1.55;font-size:.72rem}.iv-meter{height:5px;background:#263446;border-radius:99px;overflow:hidden;margin:10px 0 7px}.iv-meter>div{height:100%;width:0;background:linear-gradient(90deg,#a08d52,#ffd06f);transition:width .25s}.iv-stats{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;font-size:.73rem;color:#dfd5b8;font-variant-numeric:tabular-nums}.iv-disclaimer{margin-top:8px;font-size:.7rem;color:#a9b7c9;line-height:1.5}
+.rarity-sandbox{margin-top:13px;padding:13px;background:#101d2c;border:1px solid #345467;border-radius:12px}.rarity-sandbox select{background:#07111d;color:#f2fbff;border:1px solid #35526b;border-radius:9px;padding:10px 12px;font:inherit;font-size:.85rem;max-width:100%;width:100%}.rarity-sandbox label{display:block;color:#b9cee4;font-weight:750;font-size:.74rem;margin:0 0 8px}.rarity-sandbox p{font-size:.71rem;color:#a8bfd6;line-height:1.5;margin:8px 0 0}.odds{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:12px 0}.odds>div{border:1px solid #28475c;background:#11253a;padding:12px;border-radius:10px}.odds strong{font-size:1.2rem;display:block;margin-top:3px;color:#d7f6f0;font-variant-numeric:tabular-nums}.odds small{color:#aac4d2;font-size:.67rem}.dist-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px;margin-top:14px}.dist-cell{min-width:0;text-align:center}.dist-cell .dist-track{height:55px;border-radius:5px;background:#132d40;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden}.dist-cell .dist-fill{background:linear-gradient(180deg,#e2be72,#e69e59);min-height:0}.dist-cell .dist-label{font-size:.69rem;color:#d8ccae;margin-top:4px;white-space:nowrap}.dist-cell .dist-pct{font-size:.6rem;color:#9caec3;white-space:nowrap}.simulate{border:1px solid #c3a06c!important;background:#33291b!important;color:#ffe0a5!important}
+@media(max-width:440px){.dist-cell .dist-pct{font-size:.52rem}.iv-symbols{font-size:clamp(22px,6vw,30px)}}.stat-line{display:grid;grid-template-columns:38px minmax(0,1fr) 96px;gap:10px;align-items:center;margin:12px 0}.stat-line .name{font-size:.78rem;font-weight:850}.track{height:10px;border-radius:999px;overflow:hidden;background:#1d3042}.fill{height:100%;border-radius:999px;transition:width .25s}.stat-line .amount{text-align:right;font-variant-numeric:tabular-nums;font-size:.88rem;font-weight:800}.stat-line .amount strong{display:block;font-size:.96rem;line-height:1.1}.stat-line .amount small{display:block;font-size:.64rem;line-height:1.18;color:#8facbf;font-weight:700}.level-control{display:flex;align-items:center;gap:14px}.level-control input{flex:1;accent-color:var(--aqua)}.level-num{background:#183b43;color:#9aefe0;border:1px solid #3a6771;padding:7px 11px;border-radius:9px;font-size:.9rem;font-weight:850;min-width:62px;text-align:center;font-variant-numeric:tabular-nums}.stat-overview{font-size:.76rem;line-height:1.5;color:var(--muted);margin:5px 0 0}.radar-card{margin-top:16px;padding:14px;border:1px solid #24384b;border-radius:14px;background:linear-gradient(180deg,#0f1a2a,#0c1626)}.radar-wrap{height:320px}.radar-meta{display:none}.table-wrap{overflow-x:auto;margin:0 -4px}table{width:100%;border-collapse:collapse;text-align:right;font-size:.77rem;font-variant-numeric:tabular-nums;white-space:nowrap}th{font-size:.63rem;letter-spacing:.045em;color:#95acc2;text-transform:uppercase;text-align:right;font-weight:800}th:first-child,td:first-child{text-align:left}th,td{border-bottom:1px solid #223247;padding:11px 8px}tbody tr:hover{background:#182f3d}.row-name{font-weight:850}.caption{font-size:.73rem;color:#9cafc5;line-height:1.55;margin:13px 0 0}.chart-card{margin-top:17px}.canvas-wrap{position:relative;width:100%;height:250px}canvas{display:block;width:100%;height:100%}.legend{display:flex;flex-wrap:wrap;gap:12px;margin-top:5px}.legend span{display:inline-flex;align-items:center;gap:6px;font-weight:700;font-size:.68rem;color:#c1cedd}.dot{width:8px;height:8px;border-radius:50%}.parts{display:grid;gap:8px}.part{padding:10px 11px;border-radius:11px;background:#0e1a2b;border:1px solid #27394e;display:flex;align-items:center;justify-content:space-between;gap:14px}.part h3{font-size:.84rem;margin:0 0 4px}.part p{font-size:.7rem;margin:0;color:#91a6bd}.part span{font-size:.73rem;font-weight:800;white-space:nowrap}.info{border:1px dashed #39596a;border-radius:13px;padding:13px;font-size:.79rem;color:#b1c7d7;line-height:1.6;margin-top:16px}.note{font-size:.76rem;color:#829ab3;line-height:1.58;margin-top:18px}.camera-panel{border:1px solid #4e7891;background:#07111d;border-radius:12px;margin-top:13px;padding:12px}.camera-panel[hidden]{display:none}.camera-panel video{width:100%;max-height:280px;object-fit:cover;border-radius:8px;background:#000}.reader-box{width:100%;overflow:hidden;border-radius:11px;background:#08131c;min-height:32px}.reader-box video{border-radius:9px;object-fit:cover}.reader-box:empty{display:none}.camera-hint{text-align:center;color:#b4d1dc;font-size:.73rem;line-height:1.5;margin:9px 0 3px}.camera-panel .reader-error{font-size:.72rem;color:#ffc7c5}.photo-reader{position:absolute;top:-15000px;left:-15000px;width:500px;min-height:400px;overflow:hidden;pointer-events:none}.camera-panel .btn{margin-top:8px;width:100%}.formula{display:block;white-space:normal;padding:12px;border-radius:10px;background:#07111d;color:#cbe7ed;border:1px solid #263a4e;font-size:.76rem;line-height:1.8;overflow-wrap:anywhere}footer{padding:25px 0;text-align:center;color:#71879e;font-size:.73rem}
+@media(max-width:850px){.layout{grid-template-columns:minmax(0,1fr)}.shell{padding:18px 12px 36px}.hero h1{font-size:2.1rem}.hero p{font-size:.87rem}.version{font-size:.66rem}.card{padding:15px}.canvas-wrap{height:220px}header{margin-bottom:15px}}
+@media(max-width:375px){.logo-icon{display:none}.version{align-self:flex-start}.stat-line{grid-template-columns:34px minmax(0,1fr) 60px}th,td{padding:10px 5px;font-size:.69rem}}
+
+.equipment-toolbar{display:flex;gap:8px;margin:5px 0 15px}.equipment-toolbar .btn{flex:1}.equip-config{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}.equip-config select{width:100%;padding:12px;border-radius:10px;color:var(--text);border:1px solid #35526b;background:#07111d;font:inherit;font-size:.82rem}.equip-config input{width:100%;padding:10px;letter-spacing:normal}.equip-config .field .btn{min-width:52px;padding:10px}.equip-level{margin-top:16px}.enhance-buttons{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:5px;margin:13px 0}.enhance-buttons .btn{min-width:0;padding:9px 2px;font-size:.7rem}.enhance-buttons .btn.active{background:#286859;border-color:#78e5cf;color:#e1fff7}.gear-heading{padding:15px;border-radius:12px;background:linear-gradient(95deg,#142f41,#172335);border:1px solid #365773;display:flex;align-items:center;justify-content:space-between;gap:8px}.gear-heading h3{font-size:1.06rem;margin:3px 0 5px}.gear-heading p{margin:0;color:#b5c4d8;font-size:.73rem}.gear-stat-main{color:#8cf7dd;font-size:1.45rem;font-weight:850;font-variant-numeric:tabular-nums}.gear-substat-list{margin-top:12px;display:grid;gap:7px}.gear-sub{display:flex;justify-content:space-between;align-items:center;padding:10px 12px;background:#101d2b;border:1px solid #293e52;border-radius:9px;font-size:.8rem}.gear-sub strong{font-variant-numeric:tabular-nums}.gear-sub .up{color:var(--green);font-size:.69rem;margin-left:9px}.gear-sub .new{color:var(--gold);font-size:.69rem;margin-left:9px}.equip-grid-note{margin-top:4px;color:#a0b8cc;font-size:.72rem;line-height:1.65}.equipment-events{margin-top:12px;border-top:1px solid #2b3c4e;padding-top:10px}.equipment-event{display:flex;justify-content:space-between;gap:10px;padding:6px 0;color:#aebfd2;font-size:.74rem}.equipment-event strong{color:#dbe7f8}.equipment-event.future{opacity:.42}.part{cursor:pointer;transition:border-color .15s}.part:hover,.part.selected{border-color:#62bfc0;background:#18303d}.part span{max-width:56%;overflow-wrap:anywhere;text-align:right;white-space:normal}.part p{margin-top:4px}.special-stats{display:flex;flex-wrap:wrap;gap:7px;margin-top:13px}.special-stats .chip{border-radius:9px}.equipment-mult{font-variant-numeric:tabular-nums;color:#eac78a;font-size:.75rem}.stat-up{color:#9aedd1}#equipmentRules td:nth-child(2){white-space:normal;min-width:185px;text-align:left;line-height:1.5}#equipmentRules th:nth-child(2){text-align:left}.label-wrap{white-space:normal}.gear-copy{font-size:.7rem;color:#a9bdd2;white-space:nowrap}.equip-pill{font-size:.7rem;border-radius:999px;padding:5px 8px;border:1px solid #395466;background:#152c39;white-space:nowrap}
+@media(max-width:520px){.equip-config{grid-template-columns:1fr}.gear-stat-main{font-size:1.2rem}.gear-heading{align-items:start}.enhance-buttons{gap:3px}.stat-line{gap:7px;grid-template-columns:34px minmax(0,1fr) 92px}.radar-wrap{height:280px}}
+
+
+/* V0.6.4 · Simulador de combate */
+.combat-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}.combat-grid label{display:block;margin-bottom:6px}.combat-grid select,.combat-grid input{width:100%;background:#07111d;color:#f4faff;border:1px solid #35516a;border-radius:10px;padding:11px 10px;font:inherit;font-size:.85rem;min-width:0}.combat-grid input[type="range"]{padding:5px;accent-color:var(--aqua);cursor:pointer}.combat-card{border:1px solid #325468;background:linear-gradient(130deg,#133347,#152237);padding:16px;border-radius:14px;margin-top:16px}.combat-card .combat-n{font-size:clamp(2rem,4vw,3rem);font-weight:900;line-height:1.1;letter-spacing:-.06em;color:#a8ffda;font-variant-numeric:tabular-nums}.combat-card .combat-summary{display:flex;justify-content:space-between;gap:12px;align-items:center}.combat-badges{display:flex;gap:7px;flex-wrap:wrap;justify-content:flex-end}.combat-badges .chip{font-size:.68rem}.combat-hp-track{margin-top:13px;height:12px;border-radius:999px;overflow:hidden;background:#304559}.combat-hp-track .drain{height:100%;background:linear-gradient(90deg,#75e7b8,#f2b97e);transition:width .2s}.combat-stats{margin-top:13px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}.combat-stats>div{padding:9px;background:#0e2435;border:1px solid #365062;border-radius:9px;min-width:0}.combat-stats small{display:block;font-size:.66rem;color:#97b3c7}.combat-stats strong{font-size:.94rem;font-variant-numeric:tabular-nums;color:#e6f8ff}.combat-equation{font-size:.76rem;line-height:1.65;color:#b7d5e6;background:#091421;border:1px solid #28465b;border-radius:10px;padding:12px;margin-top:11px;overflow-wrap:anywhere}.combat-note{color:#9eb6ca;font-size:.73rem;line-height:1.6;margin:12px 0 0}.combat-error{color:#ffc1c9;font-size:.76rem;line-height:1.5;margin:12px 0 0}.combat-toggle{display:flex;justify-content:space-between;gap:10px;align-items:center;margin:10px 0 8px}.combat-toggle output{color:#95eadc;font-size:.88rem;font-weight:850;font-variant-numeric:tabular-nums}.combat-wrap{display:grid;gap:12px}
+@media(max-width:520px){.combat-grid{grid-template-columns:1fr}.combat-card .combat-summary{align-items:start;flex-direction:column}.combat-stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+</style>
+</head>
+<body>
+<div class="shell">
+<header>
+  <div class="logo"><div class="logo-icon">⌬</div><div class="hero"><div class="eyebrow">Proyecto · ADN de Código</div><h1>Laboratorio genético</h1><p>Un código de barras. Un ADN global reproducible. Seis atributos, IV mínimos por rareza, estrellas genéticas y crecimiento hasta nivel 60 y equipamiento modular de seis piezas.</p></div></div>
+  <div class="version">V0.6.4</div>
+</header>
+<main class="layout">
+ <div class="stack">
+  <section class="card">
+   <div class="section-head"><h2>01 · Código de origen</h2><span class="overline">EAN / UPC / GTIN</span></div>
+   <label class="form-label" for="gtinInput">Código de barras</label>
+   <div class="field"><input id="gtinInput" inputmode="numeric" autocomplete="off" spellcheck="false" maxlength="22" value="7791234567898" aria-label="Código de barras"><button class="btn btn-main" id="analyzeBtn" type="button">Generar ADN</button></div>
+   <div class="actions"><button type="button" class="btn" id="randomBtn">Otro código válido</button><button type="button" class="btn" id="exampleBtn">Ejemplo UPC</button><button type="button" class="btn" id="scanBtn" title="Solicita la autorización del navegador y abre la cámara">⌗ Cámara en vivo</button><label class="btn" for="captureBarcodeFile" title="Abre la cámara del celular para tomar una fotografía">Tomar foto</label><label class="btn" for="uploadBarcodeFile">Elegir imagen</label><button type="button" class="btn" id="permissionTestBtn" title="Comprueba acceso a vídeo sin activar el lector">Probar acceso en vivo</button><button type="button" class="btn" id="cameraInfoBtn" title="Diagnóstico de cámara">¿Cámara?</button><button type="button" class="btn" id="exportBtn">Exportar JSON</button></div>
+   <div id="status" class="result" aria-live="polite"></div>
+   <div class="camera-panel" id="cameraPanel" hidden><div class="reader-box" id="html5Reader"></div><video id="cameraVideo" autoplay muted playsinline hidden></video><p class="camera-hint" id="scannerHint">Apuntá de frente al código EAN o UPC y mantenelo dentro del área de lectura.</p><button type="button" class="btn" id="closeCamera">Detener cámara</button></div><div id="html5PhotoReader" class="photo-reader" aria-hidden="true"></div>
+   <input type="file" id="captureBarcodeFile" accept="image/*" capture="environment" hidden aria-label="Tomar una foto del código de barras">
+   <input type="file" id="uploadBarcodeFile" accept="image/*" hidden aria-label="Seleccionar imagen del código de barras">
+   <p class="caption">Escáner: html5-qrcode 2.3.8 (cuando hay conexión), con lector local alternativo. Soporta EAN-13, EAN-8, UPC-A y QR con GTIN en texto o enlace GS1 Digital Link (QR cuando carga la biblioteca); intenta usar la cámara trasera y también permite tomar o elegir fotos. La cámara en vivo requiere un contexto autorizado (preferiblemente HTTPS). «Tomar foto» abre la cámara del sistema y NO comprueba los permisos de video en vivo. «Cámara en vivo» llama a getUserMedia al pulsar el botón, para solicitar el permiso antes de cargar la biblioteca. «Probar acceso en vivo» verifica por separado la API. Los fotogramas y fotos se analizan en el dispositivo.</p>
+   <div class="settings"><span id="formatChip" class="chip">Formato —</span><span id="normalizedChip" class="chip">GTIN-14 —</span></div>
+   <div class="rarity-sandbox"><label for="scalingMode">Distribución del SCALING · comparación de algoritmos</label>
+    <select id="scalingMode"><option value="budget" selected>DNA-V2 · 560 puntos repartidos (nuevo)</option><option value="legacy">DNA-V1 · parejas opuestas (anterior)</option></select>
+    <p id="scalingNote">Cada criatura tiene exactamente 560 puntos de SCALING repartidos en seis atributos entre 50 y 150. No modifica IV, rareza ni RNG SCALE.</p>
+   </div>
+   <div class="rarity" id="rarity" data-tier="0"><div><div class="overline">Rareza genética global · +0–10% al crecimiento</div><strong id="rarityName">—</strong><small id="rarityChance">—</small></div><div class="mult" id="rarityMultiplier">×—</div></div>
+   <div class="rarity-sandbox"><label for="tierSandbox">Simular rareza para comparar IV (sin alterar el código real)</label><select id="tierSandbox"><option value="actual">Rareza real derivada del GTIN</option><option value="0">Común · simulada</option><option value="1">Poco común · simulada</option><option value="2">Raro · simulada</option><option value="3">Épico · simulada</option><option value="4">Legendario · simulada</option><option value="5">Mítico · simulada</option></select><p id="sandboxNote">Las simulaciones son exclusivamente para probar el balance. No representan una recompensa obtenida por el código.</p></div>
+   <section class="iv-stars" id="ivStars" aria-label="Perfección genética por IV">
+     <div class="iv-top"><div><div class="overline">Perfección genética · probabilidades según rareza</div><h3>Calidad de IV</h3></div><div id="starSummary" class="iv-result" aria-live="polite">— / 7</div></div>
+     <div class="iv-symbols" id="starSymbols" role="img" aria-label="Estrellas de perfección genética">☆☆☆☆☆☆☆</div>
+     <div class="iv-meter" aria-hidden="true"><div id="ivMeterFill"></div></div>
+     <div class="iv-stats"><span id="ivRollTotal">Tiradas: — / 42</span><span id="ivValueTotal">IV totales: — / 300</span></div>
+     <p class="iv-disclaimer" id="starChance">Las estrellas se calculan con las seis tiradas RNG_IVS, no con los IV convertidos.</p>
+     <div class="odds"><div><small>Probabilidad de 6 o 7 ★</small><strong id="sixPlusChance">—</strong></div><div><small>Probabilidad de 7 ★</small><strong id="perfectChance">—</strong></div></div>
+     <div class="overline">Distribución teórica · 1 a 7 ★</div><div class="dist-grid" id="starDistribution" aria-label="Probabilidad teórica de cada calificación"></div>
+   </section>
+   <div class="info"><strong>Regla:</strong> el GTIN normalizado conserva la misma rareza global y RNG SCALE; los RNG_IVS dependen ahora de los mínimos de su rareza. Las tiradas son reproducibles, pero pueden cambiar respecto a V0.2.1 para rarezas superiores a común. No se consulta una base comercial de productos.</div>
+  </section>
+  <section class="card">
+   <div class="section-head"><h2>02 · Atributos por nivel</h2><span class="overline">Nivel máximo 60</span></div>
+   <div class="level-control"><label for="levelSlider" class="form-label" style="margin:0">NIVEL</label><input id="levelSlider" type="range" min="1" max="60" value="1"><output id="levelLabel" class="level-num" for="levelSlider">01</output></div>
+   <div id="statBars" style="margin-top:23px"></div>
+   <p class="stat-overview">Nuevo crecimiento lineal: las bases permanecen fijas; RNG SCALE, IV, SCALING y rareza multiplican la ganancia por nivel. En DNA-V2 se conserva un presupuesto de 560 puntos de SCALING. Las barras muestran el total actual con equipamiento, y debajo indican la bonificación acumulada. Las piezas usan una escala numérica basada en runas 6★ tipo Summoners War para que los bonos sean mucho más visibles.</p>
+   <div class="radar-card"><div class="overline" style="margin-bottom:10px">Perfil radial · SCALING + IV</div><div class="canvas-wrap radar-wrap"><canvas id="radarChart" aria-label="Gráfico radial del perfil genético" role="img"></canvas></div><div id="radarLegend" class="radar-meta"></div></div>
+   <div class="chart-card"><div class="overline" style="margin-bottom:10px">Crecimiento del nivel 1 al 60</div><div class="canvas-wrap"><canvas id="growthChart" aria-label="Gráfico de crecimiento de las seis estadísticas" role="img"></canvas></div><div id="legend" class="legend"></div></div>
+  </section>
+  <section class="card">
+   <div class="section-head"><h2>03 · Genética calculada</h2><span class="overline" id="scalingVersionBadge">SCALING-V2</span></div>
+   <div class="table-wrap"><table><thead><tr><th>Stat</th><th>RNG SCALE</th><th>BASE</th><th>SCALING</th><th>MÍN. RNG_IVS</th><th>TIRADA IV</th><th>IV</th><th>COEF.</th></tr></thead><tbody id="geneticBody"></tbody><tfoot><tr><td class="row-name">TOTAL IV</td><td>—</td><td>—</td><td>—</td><td>—</td><td id="ivRollTableTotal">—</td><td id="ivValueTableTotal">—</td><td>—</td></tr></tfoot></table></div>
+   <p class="caption" id="scalingSummary">SCALING total: —.</p>
+   <p class="caption">Cada atributo tiene un RNG_IVS mínimo que depende de la rareza; su máximo es siempre 7. La estrella depende exclusivamente de la suma de las seis tiradas originales (1–7), no del total de IV convertidos.</p>
+   <p class="caption">RNG SCALE HP/SPD: 0–25 de 5 en 5. RNG ATK/MAT/DEF/MDF: 0–50 de 5 en 5. IV: 0, 5, 10, 20, 30, 40 o 50 (según mínimo por rareza). Coeficientes fijos: HP 0,5; ATK/MAT/DEF/MDF 0,075; SPD 0,055.</p>
+  </section>
+  <section class="card">
+   <div class="section-head"><h2>04 · Valores clave</h2><span class="overline">Niveles 1 / 30 / 60</span></div>
+   <div class="table-wrap"><table><thead><tr><th>Atributo</th><th>Nivel 1</th><th>Nivel 30</th><th>Nivel 60</th></tr></thead><tbody id="levelTable"></tbody></table></div>
+  </section>
+ </div>
+ <div class="stack">
+  <section class="card">
+   <div class="section-head"><h2>05 · Seis piezas equipables</h2><span class="overline">Identidad derivada del GTIN</span></div>
+   <div id="parts" class="parts"></div>
+   <p class="caption">Las seis piezas son plantillas derivadas del GTIN. La cabeza puede tener ATK o MAT plano; el cuerpo DEF o MDF plano; el núcleo HP plano. Los principales y modelos se conservan entre copias. Las substats y mejoras pertenecen a cada instancia simulada.</p>
+  </section>
+
+  <section class="card">
+   <div class="section-head"><h2>06 · Regla matemática</h2><span class="overline">Sin aleatoriedad por sesión</span></div>
+   <code class="formula">STAT(L) = FLOOR(BASE + EXTRA_HP + (RNG + IV) × COEF × L × (SCALING / 100) × RAREZA). EXTRA_HP = 5 × L para HP; 0 en las demás. COEF = 0,5 (HP), 0,075 (ATK/MAT/DEF/MDF), 0,055 (SPD).</code>
+   <code class="formula" style="margin-top:8px">RNG_IVS(STAT) = uniforme entero [MIN_IV_RNG[rareza][stat], 7]; IV = [0,5,10,20,30,40,50][RNG_IVS-1].</code>
+   <code class="formula" style="margin-top:8px">ESTRELLAS = MAX(1, MIN(7, CEIL((SUMA(RNG_IVS de HP, ATK, MAT, DEF, MDF y SPD) − 5) / 6))). Solo seis tiradas de 7 producen 7 estrellas.</code>
+   <p class="caption">Cada estadística crece linealmente con el nivel. Para reproducibilidad numérica, el cálculo interno utiliza enteros y aplica FLOOR una sola vez. Se conservan las semillas por dominio; la nueva asignación de rangos IV está versionada como IV-RARITY-V2.</p>
+  </section>
+  <section class="card" id="equippedCard">
+   <div class="section-head"><h2>07 · ADN + equipamiento</h2><span class="overline">Estadísticas finales</span></div>
+   <div class="equipment-toolbar"><button type="button" class="btn" id="allZeroBtn">Todas +0</button><button type="button" class="btn btn-main" id="allMaxBtn">Todas +15</button></div>
+   <div class="table-wrap"><table><thead><tr><th>Stat</th><th>Genética</th><th>Bonificación</th><th>Total</th></tr></thead><tbody id="equippedTotals"></tbody></table></div>
+   <div class="special-stats" id="specialTotals"></div>
+   <p class="caption">TOTAL = FLOOR(GENÉTICO × (1 + Σ% / 100) + Σ planos). Los bonos % solo multiplican la genética, no los planos. CRIT / Effect ACC / Effect RES se informan como adicionales de equipamiento, sin inventar valores base de combate.</p>
+  </section>
+  <section class="card" id="equipmentCard">
+   <div class="section-head"><h2>08 · Forja de piezas</h2><span class="overline">+0 a +15</span></div>
+   <div class="equip-config">
+    <div><label class="form-label" for="equipmentSlot">Pieza</label><select id="equipmentSlot"></select></div>
+    <div><label class="form-label" for="equipmentCopy">Copia simulada</label><div class="field"><input id="equipmentCopy" type="number" min="1" max="1000000" value="1" inputmode="numeric" aria-label="Número de copia para simulación"><button class="btn" type="button" id="nextCopyBtn">Otra</button></div></div>
+   </div>
+   <div id="equipmentDetails"></div>
+   <div class="level-control equip-level"><label for="equipmentEnhance" class="form-label" style="margin:0">MEJORA</label><input id="equipmentEnhance" type="range" min="0" max="15" value="0"><output id="enhanceLabel" class="level-num">+0</output></div>
+   <div class="enhance-buttons"><button class="btn" data-enhance="0">+0</button><button class="btn" data-enhance="3">+3</button><button class="btn" data-enhance="6">+6</button><button class="btn" data-enhance="9">+9</button><button class="btn" data-enhance="12">+12</button><button class="btn" data-enhance="15">+15</button></div>
+   <div class="equip-grid-note">+3 / +6 / +9 / +12: desbloquean o mejoran una substat. +15: solamente termina de subir el principal. Un máximo de 4 substats por pieza. Los valores del laboratorio ahora usan una base inspirada en runas 6★ de Summoners War.</div>
+   <div class="equipment-events" id="equipmentEvents"></div>
+   <p class="caption"><strong>Modo laboratorio:</strong> cambiar el número de copia permite simular otras tiradas; no representa un inventario real ni recompensas. En producción, un servidor asignaría identificadores únicos, derivaría las tiradas con clave privada y guardaría cada mejora para impedir repeticiones.</p>
+  </section>
+  <section class="card">
+   <div class="section-head"><h2>09 · Reglas de equipamiento</h2><span class="overline">EQUIP-V1</span></div>
+   <div class="table-wrap"><table><thead><tr><th>Pieza</th><th>Principal permitido</th><th>Opciones</th></tr></thead><tbody id="equipmentRules"></tbody></table></div>
+   <p class="caption">Las 15 substats posibles son HP, ATK, MAT, DEF y MDF en plano o %, SPD plano, Crit Rate %, Crit DMG %, Effect ACC % y Effect RES %. Cada objeto no repite substat ni permite una substat idéntica a su principal. Para esta versión, los valores de principales y substats usan una escala inspirada en runas 6★ de Summoners War; MAT replica ATK y MDF replica DEF. Las listas de principales están cerradas por ranura; el catálogo de modelos y habilidades aún está pendiente.</p>
+  </section>
+  <section class="card" id="combatCard">
+   <div class="section-head"><h2>10 · Laboratorio de daño</h2><span class="overline">DAMAGE-V1</span></div>
+   <p class="caption" style="margin:0 0 13px">Probá movimientos físicos (ATK contra DEF) y mágicos (MAT contra MDF), usando la criatura actual con sus seis piezas y un defensor generado desde otro GTIN.</p>
+   <div class="combat-wrap">
+    <div class="combat-grid">
+     <div><label class="form-label" for="combatMove">Movimiento</label><select id="combatMove"></select></div>
+     <div><label class="form-label" for="combatEnemyGTIN">GTIN del rival</label><input id="combatEnemyGTIN" inputmode="numeric" maxlength="18" spellcheck="false" value="7790058021234" aria-label="GTIN del defensor"></div>
+     <div><label class="form-label" for="combatEnemyLevel">Nivel del rival</label><input id="combatEnemyLevel" type="number" min="1" max="60" step="1" value="60"></div>
+     <div><label class="form-label" for="combatEnemyGear">Equipamiento rival</label><select id="combatEnemyGear"><option value="none">Sin piezas</option><option value="zero" selected>6 piezas +0</option><option value="max">6 piezas +15</option></select></div>
+    </div>
+    <div><div class="combat-toggle"><label class="form-label" for="combatPower" style="margin:0">Move Power · ajustable para pruebas</label><output id="combatPowerLabel" for="combatPower">60</output></div><input type="range" id="combatPower" min="1" max="200" step="1" value="60" style="width:100%;accent-color:var(--aqua)"></div>
+    <div class="combat-grid"><div><label class="form-label" for="combatDivisor">Divisor de balance</label><input id="combatDivisor" type="number" min="1" max="200" step="1" value="15"></div><div style="display:flex;align-items:end"><button id="combatSameGTIN" class="btn" type="button" style="width:100%">Rival con mi mismo GTIN</button></div></div>
+    <div id="combatResult" aria-live="polite"></div>
+    <p class="combat-note">Daño determinista sin crítico, evasión, variación aleatoria, afinidad elemental, habilidades pasivas ni resistencia a debuffs. Los movimientos son ejemplos para estudiar el sistema; las piezas todavía no tienen un catálogo de ataques asignado. La constante 1,1 se mantiene fija.</p>
+   </div>
+  </section>
+ </div>
+</main>
+<p class="note"><strong>Advertencia:</strong> un dígito de control correcto no demuestra que el GTIN esté asignado comercialmente ni que el usuario posea el producto. Este prototipo usa SHA-256 público para reproducibilidad; un juego con recompensas, cuentas y torneos necesitará validación y límites en servidor, además de generación privada para recompensas personales. La cámara depende del soporte del navegador y de los permisos disponibles.</p>
+<footer>ADN DE CÓDIGO · Laboratorio V0.6.4 · HTML único, sin servidores ni librerías externas</footer>
+</div>
+<script>
+'use strict';
+const GEN_VERSION='DNA-V1'; // Hash estable para rarezas, IV, RNG y piezas de versiones anteriores.
+const SCALING_ALGO_VERSION='SCALING-BUDGET-V2';
+const SCALING_BUDGET=560;
+const SCALING_FLOOR=50;
+const SCALING_CEILING=150;
+const FORMULA_VERSION='STAT-LINEAL-V2';
+const MAX_LEVEL=60;
+const STAT_NAMES=['HP','ATK','MAT','DEF','MDF','SPD'];
+const RADAR_ORDER=['HP','MAT','MDF','SPD','DEF','ATK'];
+const BASE={HP:500,ATK:100,MAT:100,DEF:50,MDF:50,SPD:50};
+const COEFF_MILLI={HP:500,ATK:75,MAT:75,DEF:75,MDF:75,SPD:55}; // coeficientes expresados en milésimas
+const IV_OPTIONS=[0,5,10,20,30,40,50];
+const STAR_VERSION='IV-STARS-V1'; // Fórmula de calificación sin cambios; ahora la distribución depende de la rareza.
+const IV_GENERATION_VERSION='IV-RARITY-V2'; // Cambio explícito frente a IV 1..7 uniforme en V0.2.1.
+const IV_MIN_BY_TIER=[
+ [1,1,1,1,1,1], // Común
+ [2,1,1,1,1,1], // Poco común
+ [2,2,2,1,1,1], // Raro
+ [3,3,3,2,2,1], // Épico
+ [4,4,4,3,3,2], // Legendario
+ [5,5,5,4,4,3]  // Mítico
+];
+const STAR_PROBABILITIES=[462,10654,43043,47698,14868,923,1]; // Referencia común: seis RNG_IVS 1..7, NO usar para rarezas superiores.
+function starDistributionForTier(tierIndex){
+ if(!Number.isInteger(tierIndex)||tierIndex<0||tierIndex>=IV_MIN_BY_TIER.length)throw Error('Rareza fuera de rango');
+ // Convolución discreta exacta: cuenta todas las combinaciones posibles, sin simulación Monte Carlo.
+ let sums=new Map([[0,1]]);
+ for(const minimum of IV_MIN_BY_TIER[tierIndex]){
+  const next=new Map();
+  for(const [sum,count] of sums)for(let value=minimum;value<=7;value++)next.set(sum+value,(next.get(sum+value)||0)+count);
+  sums=next;
+ }
+ const stars=Array(7).fill(0);let total=0;
+ for(const [sum,count] of sums){const index=Math.max(1,Math.min(7,Math.ceil((sum-5)/6)))-1;stars[index]+=count;total+=count;}
+ const probabilities=stars.map(c=>c/total);
+ return {tierIndex,stars,probabilities,total,perfectCombinations:stars[6],sixPlusCombinations:stars[5]+stars[6],sixPlusProbability:probabilities[5]+probabilities[6],perfectProbability:probabilities[6]};
+}
+const TIER_STAR_DISTRIBUTIONS=IV_MIN_BY_TIER.map((_,i)=>starDistributionForTier(i));
+function starsFromRolls(rolls){
+ if(!Array.isArray(rolls)||rolls.length!==6||!rolls.every(v=>Number.isInteger(v)&&v>=1&&v<=7))throw Error('Se requieren seis RNG_IVS válidos (1–7)');
+ const sum=rolls.reduce((acc,v)=>acc+v,0);
+ return {rollSum:sum,stars:Math.max(1,Math.min(7,Math.ceil((sum-5)/6)))};
+}
+
+const TIERS=[{name:'Común',mult:1,weight:600,color:'#aab8c9',pct:'60%'},{name:'Poco común',mult:1.02,weight:250,color:'#8ddbaf',pct:'25%'},{name:'Raro',mult:1.04,weight:100,color:'#78b5ff',pct:'10%'},{name:'Épico',mult:1.06,weight:40,color:'#c397ff',pct:'4%'},{name:'Legendario',mult:1.08,weight:9,color:'#f6c36f',pct:'0,9%'},{name:'Mítico',mult:1.10,weight:1,color:'#ff93c4',pct:'0,1%'}];
+const COLORS={HP:'#f17885',ATK:'#f2ab70',MAT:'#b8a0ff',DEF:'#6ca9fa',MDF:'#6de3c2',SPD:'#f9dc82'};
+const PART_NAMES=[['HEAD','Cabeza'],['BODY','Cuerpo'],['LEFT_ARM','Brazo izquierdo'],['RIGHT_ARM','Brazo derecho'],['LEGS','Piernas']];
+const FAMILIES=['Orgánico','Mineral','Cristalino','Insectoide','Vegetal','Mecánico','Reptiliano','Etéreo'];
+
+// SHA-256 íntegro en JavaScript: funciona también como archivo local sin WebCrypto/CDN.
+const K = [
+0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,
+0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,
+0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,
+0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,
+0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,
+0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,
+0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,
+0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2];
+function rightRotate(v,n){return (v>>>n)|(v<<(32-n));}
+function sha256(value){
+ const data=new TextEncoder().encode(value);const padded=new Uint8Array(Math.ceil((data.length+9)/64)*64);padded.set(data);padded[data.length]=128;
+ const dataView=new DataView(padded.buffer);const bits=data.length*8;dataView.setUint32(padded.length-8,Math.floor(bits/4294967296),false);dataView.setUint32(padded.length-4,bits>>>0,false);
+ const H=new Uint32Array([0x6a09e667,0xbb67ae85,0x3c6ef372,0xa54ff53a,0x510e527f,0x9b05688c,0x1f83d9ab,0x5be0cd19]);
+ const W=new Uint32Array(64);
+ for(let start=0;start<padded.length;start+=64){
+  for(let i=0;i<16;i++)W[i]=dataView.getUint32(start+i*4,false);
+  for(let i=16;i<64;i++){const a=W[i-15],b=W[i-2];const s0=rightRotate(a,7)^rightRotate(a,18)^(a>>>3),s1=rightRotate(b,17)^rightRotate(b,19)^(b>>>10);W[i]=(W[i-16]+s0+W[i-7]+s1)>>>0;}
+  let [a,b,c,d,e,f,g,h]=H;
+  for(let i=0;i<64;i++){
+   const S1=rightRotate(e,6)^rightRotate(e,11)^rightRotate(e,25),ch=(e&f)^(~e&g);const t1=(h+S1+ch+K[i]+W[i])>>>0;
+   const S0=rightRotate(a,2)^rightRotate(a,13)^rightRotate(a,22),maj=(a&b)^(a&c)^(b&c);const t2=(S0+maj)>>>0;
+   h=g;g=f;f=e;e=(d+t1)>>>0;d=c;c=b;b=a;a=(t1+t2)>>>0;
+  }
+  H[0]=(H[0]+a)>>>0;H[1]=(H[1]+b)>>>0;H[2]=(H[2]+c)>>>0;H[3]=(H[3]+d)>>>0;H[4]=(H[4]+e)>>>0;H[5]=(H[5]+f)>>>0;H[6]=(H[6]+g)>>>0;H[7]=(H[7]+h)>>>0;
+ }
+ const out=new Uint8Array(32);const view=new DataView(out.buffer);H.forEach((v,i)=>view.setUint32(i*4,v,false));return out;
+}
+function hashHex(s){return Array.from(sha256(s),b=>b.toString(16).padStart(2,'0')).join('');}
+function validate(raw){
+ const digits=String(raw).trim().replace(/[\s-]/g,'');
+ if(!/^\d+$/.test(digits)||![8,12,13,14].includes(digits.length))throw Error('Ingresá únicamente 8, 12, 13 o 14 dígitos.');
+ let sum=0;for(let i=digits.length-2,w=3;i>=0;i--,w=w===3?1:3)sum+=Number(digits[i])*w;
+ const expected=(10-(sum%10))%10;
+ if(expected!==Number(digits[digits.length-1]))throw Error('Dígito de control incorrecto. Para este número debería ser '+expected+'.');
+ return {input:digits,format:digits.length===8?'EAN-8':digits.length===12?'UPC-A':digits.length===13?'EAN-13':'GTIN-14',gtin14:digits.padStart(14,'0')};
+}
+function checkDigit(body){let s=0;for(let i=body.length-1,w=3;i>=0;i--,w=w===3?1:3)s+=Number(body[i])*w;return String((10-s%10)%10);}
+function makeRandomGTIN(){
+ const a=new Uint32Array(3);if(globalThis.crypto&&crypto.getRandomValues)crypto.getRandomValues(a);else{for(let i=0;i<3;i++)a[i]=(Math.random()*2**32)>>>0;}
+ const body=Array.from({length:12},(_,i)=>String((a[Math.floor(i/4)]>>>((i%4)*8))%10)).join('');return body+checkDigit(body);
+}
+function createRoll(gtin14){
+ return function roll(domain,n){
+  if(!Number.isInteger(n)||n<=0||n>4294967296)throw Error('Rango RNG inválido');
+  const limit=Math.floor(4294967296/n)*n;
+  for(let trial=0;trial<128;trial++){
+   const h=sha256(GEN_VERSION+'|'+gtin14+'|'+domain+'|'+trial);
+   const x=(((h[0]*16777216)+(h[1]<<16)+(h[2]<<8)+h[3])>>>0);
+   if(x<limit)return x%n;
+  }
+  throw Error('No se pudo completar el muestreo uniforme');
+ };
+}
+// Modelo genético de presupuesto fijo: sesgos lognormales y asignación secuencial de 1 punto.
+// Usa dominios exclusivos. No altera las semillas antiguas de rareza, RNG, IV ni equipamiento.
+function generateBudgetScaling(roll){
+ const weights=STAT_NAMES.map(stat=>{
+  const u1=(roll('SCALING-BUDGET-V2|'+stat+'|U1',1000000)+0.5)/1000000;
+  const u2=(roll('SCALING-BUDGET-V2|'+stat+'|U2',1000000)+0.5)/1000000;
+  const normal=Math.sqrt(-2*Math.log(u1))*Math.cos(2*Math.PI*u2);
+  return Math.exp(0.5*normal);
+ });
+ // PRNG independiente de la puntuación IV. La semilla es reproducible para el GTIN.
+ let state=roll('SCALING-BUDGET-V2|POINT-SEED',0x100000000)>>>0;
+ if(!state)state=0x6D2B79F5;
+ function next(){state^=state<<13;state^=state>>>17;state^=state<<5;return (state>>>0)/0x100000000;}
+ const values=Array(6).fill(SCALING_FLOOR);
+ for(let p=SCALING_BUDGET-6*SCALING_FLOOR;p>0;p--){
+  let total=0;
+  for(let i=0;i<6;i++)if(values[i]<SCALING_CEILING)total+=weights[i];
+  if(total<=0)throw Error('Presupuesto SCALING imposible de repartir');
+  let choice=next()*total,chosen=-1;
+  for(let i=0;i<6;i++){
+   if(values[i]>=SCALING_CEILING)continue;
+   choice-=weights[i];
+   if(choice<0){chosen=i;break;}
+  }
+  // Evita problemas numéricos en límites de doble precisión.
+  if(chosen<0)chosen=values.findIndex(v=>v<SCALING_CEILING);
+  values[chosen]++;
+ }
+ if(values.reduce((a,b)=>a+b,0)!==SCALING_BUDGET||values.some(v=>v<SCALING_FLOOR||v>SCALING_CEILING))throw Error('SCALING inconsistente');
+ return Object.fromEntries(STAT_NAMES.map((stat,i)=>[stat,values[i]]));
+}
+
+function makeGenome(gtin, forcedTierIndex=null, scalingMode='budget'){
+ const v=typeof gtin==='string'?validate(gtin):gtin;const roll=createRoll(v.gtin14);
+ if(forcedTierIndex!==null&&(!Number.isInteger(forcedTierIndex)||forcedTierIndex<0||forcedTierIndex>=TIERS.length))throw Error('Rareza simulada no válida');
+ const r=roll('GLOBAL/RARITY',1000);let cumulative=0,tierIndex=0;
+ for(let i=0;i<TIERS.length;i++){cumulative+=TIERS[i].weight;if(r<cumulative){tierIndex=i;break;}}
+ const actualTierIndex=tierIndex;
+ if(forcedTierIndex!==null)tierIndex=forcedTierIndex;
+ const stats={};
+ for(const stat of STAT_NAMES){
+  const rng=roll('GLOBAL/RNG/'+stat,stat==='HP'||stat==='SPD'?6:11)*5;
+  const minIvRoll=IV_MIN_BY_TIER[tierIndex][STAT_NAMES.indexOf(stat)];
+  const ivRoll=minIvRoll+roll('GLOBAL/IV/'+stat,8-minIvRoll);
+  const iv=IV_OPTIONS[ivRoll-1];
+  stats[stat]={base:BASE[stat],rng,minIvRoll,ivRoll,iv,scaling:0};
+ }
+ if(scalingMode==='budget'){
+  const scaling=generateBudgetScaling(roll);
+  for(const stat of STAT_NAMES)stats[stat].scaling=scaling[stat];
+ }else if(scalingMode==='legacy'){
+  stats.HP.scaling=100+stats.HP.rng-stats.SPD.rng;
+  stats.SPD.scaling=100+stats.SPD.rng-stats.HP.rng;
+  stats.ATK.scaling=100+stats.ATK.rng-stats.MAT.rng;
+  stats.MAT.scaling=100+stats.MAT.rng-stats.ATK.rng;
+  stats.DEF.scaling=100+stats.DEF.rng-stats.MDF.rng;
+  stats.MDF.scaling=100+stats.MDF.rng-stats.DEF.rng;
+ }else throw Error('Modo de escalado desconocido');
+ const perfection=starsFromRolls(STAT_NAMES.map(stat=>stats[stat].ivRoll));
+ const ivValueSum=STAT_NAMES.reduce((acc,stat)=>acc+stats[stat].iv,0);
+ const parts=PART_NAMES.map(([id,name])=>{
+  const rollRarity=roll('PART/'+id+'/RARITY',1000);let acc=0,idx=0;
+  for(let i=0;i<TIERS.length;i++){acc+=TIERS[i].weight;if(rollRarity<acc){idx=i;break;}}
+  const family=FAMILIES[roll('PART/'+id+'/FAMILY',FAMILIES.length)];
+  const variant=roll('PART/'+id+'/VARIANT',12)+1;
+  return{id,name,family,variant,tier:TIERS[idx],tierIndex:idx};
+ });
+ // El núcleo se agrega sin consumir ni alterar ninguna semilla de las cinco piezas de V0.3.0.
+ {
+  const rollRarity=roll('PART/CORE/RARITY',1000);let cumulativeCore=0,coreTier=0;
+  for(let i=0;i<TIERS.length;i++){cumulativeCore+=TIERS[i].weight;if(rollRarity<cumulativeCore){coreTier=i;break;}}
+  parts.push({id:'CORE',name:'Núcleo genético',family:FAMILIES[roll('PART/CORE/FAMILY',FAMILIES.length)],variant:roll('PART/CORE/VARIANT',12)+1,tier:TIERS[coreTier],tierIndex:coreTier});
+ }
+ return {input:v.input,format:v.format,gtin14:v.gtin14,tier:TIERS[tierIndex],tierIndex,actualTierIndex,simulated:forcedTierIndex!==null,stats,parts,perfection:{...perfection,ivValueSum,version:STAR_VERSION},version:scalingMode==='budget'?'DNA-V2':GEN_VERSION,scalingMode,scalingVersion:scalingMode==='budget'?SCALING_ALGO_VERSION:'SCALING-PAIRS-V1',scalingBudget:STAT_NAMES.reduce((acc,k)=>acc+stats[k].scaling,0),formulaVersion:FORMULA_VERSION,ivGenerationVersion:IV_GENERATION_VERSION};
+}
+function statValue(genome,stat,level){
+ if(!Number.isInteger(level)||level<1||level>MAX_LEVEL)throw Error('Nivel fuera de rango');
+ const st=genome.stats[stat];if(!st)throw Error('Stat inválida');
+ // Enteros exactos: coef=COEFF_MILLI/1000; scaling=/100; rareza=rarityHundredths/100.
+ // Producto máximo muy por debajo de Number.MAX_SAFE_INTEGER en V0.2.1.
+ const rarityHundredths=Math.round(genome.tier.mult*100);
+ const gainNumerator=(st.rng+st.iv)*COEFF_MILLI[stat]*level*st.scaling*rarityHundredths;
+ const flat=st.base+(stat==='HP'?5*level:0);
+ return flat+Math.floor(gainNumerator/10000000);
+}
+const $=id=>document.getElementById(id);
+let current=null,scanStream=null,scanFrame=null,processingScan=false;
+const fmt=n=>Math.trunc(n).toLocaleString('es-AR');
+function showStatus(message,kind='ok'){$('status').textContent=message;$('status').className='result'+(kind==='ok'?'':` ${kind}`);}
+function analyze(){
+ try{
+  const selected=$('tierSandbox').value;
+  const simulatedTier=selected==='actual'?null:Number(selected);
+  current=makeGenome($('gtinInput').value,simulatedTier,$('scalingMode').value);
+  $('gtinInput').value=current.input;
+  showStatus(current.simulated?`MODO SIMULACIÓN: rareza real del código ${TIERS[current.actualTierIndex].name}; estadísticas proyectadas como ${current.tier.name}. No representa la recompensa real.`:'GTIN matemáticamente válido. ADN + seis piezas, con principal por ranura/hash y substats por instancia simulada.',current.simulated?'warn':'ok');
+  renderGenome();
+ }
+ catch(e){current=null;showStatus(e.message,'error');$('formatChip').textContent='Formato —';$('normalizedChip').textContent='GTIN-14 —';$('rarityName').textContent='—';$('rarityMultiplier').textContent='×—';$('rarityChance').textContent='Sin resultados';$('geneticBody').innerHTML='';$('levelTable').innerHTML='';$('statBars').innerHTML='';$('parts').innerHTML='';$('equipmentDetails').innerHTML='';$('equippedTotals').innerHTML='';$('equipmentEvents').innerHTML='';$('specialTotals').innerHTML='';renderStars(null);renderCombat();drawChart();}
+}
+
+// EQUIP-V1: todos los dominios de equipamiento son nuevos, no alteran ADN, RNG_SCALE, IV ni estrellas.
+const EQUIP_VERSION='EQUIP-V1';
+const MAIN_POOLS={
+ HEAD:['ATK_FLAT','MAT_FLAT'],
+ BODY:['DEF_FLAT','MDF_FLAT'],
+ LEFT_ARM:['ATK_FLAT','ATK_PCT','MAT_FLAT','MAT_PCT','DEF_FLAT','DEF_PCT','MDF_FLAT','MDF_PCT','HP_FLAT','HP_PCT','SPD_FLAT'],
+ RIGHT_ARM:['ATK_FLAT','ATK_PCT','MAT_FLAT','MAT_PCT','DEF_FLAT','DEF_PCT','MDF_FLAT','MDF_PCT','HP_FLAT','HP_PCT','EFFECT_ACC','EFFECT_RES'],
+ LEGS:['ATK_FLAT','ATK_PCT','MAT_FLAT','MAT_PCT','DEF_FLAT','DEF_PCT','MDF_FLAT','MDF_PCT','HP_FLAT','HP_PCT','CRIT_RATE','CRIT_DMG'],
+ CORE:['HP_FLAT']
+};
+const SLOT_NAMES={HEAD:'Cabeza',BODY:'Cuerpo',LEFT_ARM:'Brazo izquierdo',RIGHT_ARM:'Brazo derecho',LEGS:'Piernas',CORE:'Núcleo genético'};
+const EQUIP_ORDER=['HEAD','LEFT_ARM','BODY','LEGS','CORE','RIGHT_ARM'];
+const MAIN_VALUES={
+ HP_FLAT:[360,2448],ATK_FLAT:[22,160],MAT_FLAT:[22,160],DEF_FLAT:[22,160],MDF_FLAT:[22,160],
+ HP_PCT:[11,63],ATK_PCT:[11,63],MAT_PCT:[11,63],DEF_PCT:[11,63],MDF_PCT:[11,63],
+ SPD_FLAT:[7,42],CRIT_RATE:[7,58],CRIT_DMG:[11,80],EFFECT_ACC:[12,64],EFFECT_RES:[12,64]
+};
+const SUB_RANGES={
+ HP_FLAT:[135,375],HP_PCT:[5,8],ATK_FLAT:[10,20],ATK_PCT:[5,8],MAT_FLAT:[10,20],MAT_PCT:[5,8],
+ DEF_FLAT:[10,20],DEF_PCT:[5,8],MDF_FLAT:[10,20],MDF_PCT:[5,8],SPD_FLAT:[4,6],
+ CRIT_RATE:[4,6],CRIT_DMG:[4,7],EFFECT_ACC:[4,8],EFFECT_RES:[4,8]
+};
+const SUBSTAT_TYPES=Object.keys(SUB_RANGES);
+const SUBSTART=[0,1,2,3,4,4];
+function formatAttribute(type,value){
+ const pct=type.endsWith('_PCT')||['CRIT_RATE','CRIT_DMG','EFFECT_ACC','EFFECT_RES'].includes(type);
+ const label=type==='CRIT_RATE'?'Crit Rate':type==='CRIT_DMG'?'Crit DMG':type==='EFFECT_ACC'?'Effect ACC':type==='EFFECT_RES'?'Effect RES':type.replace(/_(FLAT|PCT)$/,'');
+ return `${label} +${fmt(value)}${pct?'%':''}`;
+}
+function mainValue(type,enhance){
+ if(!MAIN_VALUES[type]||!Number.isInteger(enhance)||enhance<0||enhance>15)throw Error('Principal o mejora inválidos');
+ const [start,end]=MAIN_VALUES[type];return start+Math.floor((end-start)*enhance/15);
+}
+function makeGearBlueprint(g,slot){
+ if(!g||!MAIN_POOLS[slot])throw Error('Pieza sin ranura válida');
+ const p=g.parts.find(x=>x.id===slot),roll=createRoll(g.gtin14);
+ const mains=MAIN_POOLS[slot];const main=mains[roll('EQUIP-V1|PART/'+slot+'/MAIN_STAT',mains.length)];
+ return {slot,part:p,main,blueprintVersion:EQUIP_VERSION};
+}
+function rollItemInstance(g,slot,copy=1){
+ if(!Number.isInteger(copy)||copy<1||copy>1000000)throw Error('Copia fuera de rango: 1 a 1000000');
+ const b=makeGearBlueprint(g,slot);const roll=createRoll(g.gtin14);
+ const domain=`${EQUIP_VERSION}|INSTANCE|${slot}|COPY/${copy}`;
+ const eligible=SUBSTAT_TYPES.filter(x=>x!==b.main);
+ const initialCount=SUBSTART[b.part.tierIndex];
+ const used=new Set(),substats=[],events=[];
+ function addSub(prefix){
+  const possible=eligible.filter(x=>!used.has(x));
+  const type=possible[roll(domain+'|'+prefix+'/TYPE',possible.length)];
+  used.add(type);
+  const [min,max]=SUB_RANGES[type];
+  const amount=min+roll(domain+'|'+prefix+'/VALUE',max-min+1);
+  const sub={type,value:amount};substats.push(sub);return {type,amount};
+ }
+ for(let i=0;i<initialCount;i++)addSub('INITIAL/'+i);
+ for(let i=0;i<4;i++){
+  const at=[3,6,9,12][i];
+  if(substats.length<4){
+   const result=addSub('MILESTONE/'+at+'/NEW');
+   events.push({at,kind:'new',type:result.type,amount:result.amount});
+  }else{
+   const picked=roll(domain+'|MILESTONE/'+at+'/TARGET',substats.length);
+   const chosen=substats[picked];const [min,max]=SUB_RANGES[chosen.type];
+   const amount=min+roll(domain+'|MILESTONE/'+at+'/AMOUNT',max-min+1);
+   chosen.value+=amount;
+   events.push({at,kind:'upgrade',type:chosen.type,amount});
+  }
+ }
+ return {blueprint:b,slot,copy,gtin14:g.gtin14,initialCount,events,version:EQUIP_VERSION};
+}
+// Estado reproducible: las tiradas se guardan en la secuencia de eventos y se reproducen hasta el + actual.
+function itemAtEnhance(item,enhance){
+ const result={...item,enhance,mainValue:mainValue(item.blueprint.main,enhance),substats:[],appliedEvents:[]};
+ // Las substats iniciales se reconstruyen exactamente desde el dominio de cada copia.
+ // Es independiente de avances posteriores para que +0 siga idéntico.
+ if(!item.gtin14||!Number.isInteger(enhance)||enhance<0||enhance>15)throw Error('Estado de equipo inválido');
+ const roll=createRoll(item.gtin14);
+ const domain=`${EQUIP_VERSION}|INSTANCE|${item.slot}|COPY/${item.copy}`;
+ const possible=SUBSTAT_TYPES.filter(x=>x!==item.blueprint.main),used=new Set();
+ function draw(tag){
+  const options=possible.filter(x=>!used.has(x));const type=options[roll(domain+'|'+tag+'/TYPE',options.length)];used.add(type);
+  const [lo,hi]=SUB_RANGES[type];return {type,value:lo+roll(domain+'|'+tag+'/VALUE',hi-lo+1)};
+ }
+ for(let i=0;i<item.initialCount;i++)result.substats.push(draw('INITIAL/'+i));
+ for(const event of item.events){
+  if(event.at>enhance)break;
+  if(event.kind==='new'){const s=draw('MILESTONE/'+event.at+'/NEW');result.substats.push(s);result.appliedEvents.push(event);}
+  else{
+   const dest=result.substats.find(x=>x.type===event.type);
+   if(!dest)throw Error('Substat no encontrada al aplicar la mejora');
+   dest.value+=event.amount;result.appliedEvents.push(event);
+  }
+ }
+ return result;
+}
+let equipmentSelected='HEAD';
+const equipmentCopies=Object.fromEntries(EQUIP_ORDER.map(x=>[x,1]));
+const equipmentLevels=Object.fromEntries(EQUIP_ORDER.map(x=>[x,0]));
+function equipmentList(g){return EQUIP_ORDER.map(slot=>{const i=rollItemInstance(g,slot,equipmentCopies[slot]);return itemAtEnhance(i,equipmentLevels[slot]);});}
+function gearBonuses(items){
+ const bonus=Object.fromEntries(SUBSTAT_TYPES.map(k=>[k,0]));
+ for(const item of items){bonus[item.blueprint.main]+=item.mainValue;for(const sub of item.substats)bonus[sub.type]+=sub.value;}
+ return bonus;
+}
+function finalEquipStats(g,level,items){
+ const bonuses=gearBonuses(items),stats={};
+ for(const name of STAT_NAMES){const base=statValue(g,name,level);const flat=bonuses[name+'_FLAT']||0;const pct=bonuses[name+'_PCT']||0;stats[name]={base,flat,pct,final:Math.floor(base*(1+pct/100)+flat)};}
+ return {stats,bonuses};
+}
+function renderGearUI(){
+ if(!current)return;
+ const pieces=equipmentList(current);
+ $('parts').innerHTML=EQUIP_ORDER.map(slot=>{
+  const gear=pieces.find(x=>x.slot===slot),p=gear.blueprint.part;
+  return `<div class="part ${slot===equipmentSelected?'selected':''}" data-gear-slot="${slot}" tabindex="0" role="button" aria-label="Seleccionar ${p.name}"><div><h3>${p.name} <span class="gear-copy">· +${gear.enhance}</span></h3><p>${p.family} · V${p.variant} · copia ${gear.copy}</p><p style="color:#76dec9">${formatAttribute(gear.blueprint.main,gear.mainValue)}</p></div><span style="color:${p.tier.color}">${p.tier.name}</span></div>`;
+ }).join('');
+ const item=pieces.find(x=>x.slot===equipmentSelected),b=item.blueprint,p=b.part;
+ $('equipmentSlot').value=equipmentSelected;
+ $('equipmentCopy').value=String(equipmentCopies[equipmentSelected]);
+ $('equipmentEnhance').value=String(equipmentLevels[equipmentSelected]);
+ $('enhanceLabel').textContent='+'+item.enhance;
+ document.querySelectorAll('[data-enhance]').forEach(x=>x.classList.toggle('active',Number(x.dataset.enhance)===item.enhance));
+ const last=Object.fromEntries(item.appliedEvents.map(e=>[e.type,e]));
+ $('equipmentDetails').innerHTML=`<div class="gear-heading"><div><div class="overline">${p.family} · Variante ${p.variant} · ${p.name}</div><h3 style="color:${p.tier.color}">${p.tier.name} · +${item.enhance}</h3><p>Principal por hash · ${b.blueprintVersion} · copia ${item.copy}</p></div><div style="text-align:right"><div class="gear-stat-main">${formatAttribute(b.main,item.mainValue)}</div><span class="equip-pill">${item.substats.length} / 4 substats</span></div></div><div class="gear-substat-list">${item.substats.length?item.substats.map(x=>`<div class="gear-sub"><span>${formatAttribute(x.type,x.value)}</span>${last[x.type]?`<span class="${last[x.type].kind==='new'?'new':'up'}">${last[x.type].kind==='new'?'Nueva':'Mejora'} +${last[x.type].amount}</span>`:''}</div>`).join(''):'<div class="gear-sub muted">Sin substats iniciales. Se desbloquean en +3, +6, +9 y +12.</div>'}</div>`;
+ $('equipmentEvents').innerHTML=item.events.map(e=>`<div class="equipment-event ${e.at>item.enhance?'future':''}"><strong>+${e.at}</strong><span>${e.kind==='new'?'Nueva':'Aumenta'}: ${formatAttribute(e.type,e.amount)}</span></div>`).join('')+'<div class="equipment-event"><strong>+15</strong><span>Principal alcanza su máximo; sin quinta tirada de substat</span></div>';
+ const {stats,bonuses}=finalEquipStats(current,Number($('levelSlider').value),pieces);
+ $('equippedTotals').innerHTML=STAT_NAMES.map(stat=>{const x=stats[stat];const text=[x.flat?`+${fmt(x.flat)}`:'',x.pct?`+${fmt(x.pct)}%`:''].filter(Boolean).join(' · ')||'—';return `<tr><td class="row-name" style="color:${COLORS[stat]}">${stat}</td><td>${fmt(x.base)}</td><td class="stat-up">${text}</td><td><b>${fmt(x.final)}</b></td></tr>`;}).join('');
+ $('specialTotals').innerHTML=['CRIT_RATE','CRIT_DMG','EFFECT_ACC','EFFECT_RES'].map(k=>`<span class="chip">${formatAttribute(k,bonuses[k])}</span>`).join('');
+ renderAttributeBars();
+ renderCombat();
+}
+
+function exportCreatureJSON(){
+ if(!current)return;
+ const items=equipmentList(current);
+ const output={labVersion:'V0.6.4',geneticVersion:current.version,scalingVersion:current.scalingVersion,scalingBudget:current.scalingBudget,formulaVersion:current.formulaVersion,ivGenerationVersion:current.ivGenerationVersion,equipmentVersion:EQUIP_VERSION,simulatedRarity:current.simulated,gtin14:current.gtin14,genomeTier:current.tier.name,stars:current.perfection,genetics:current.stats,parts:current.parts,level:Number($('levelSlider').value),gear:items.map(item=>({slot:item.slot,copy:item.copy,blueprint:item.blueprint,enhancement:item.enhance,mainValue:item.mainValue,substats:item.substats,events:item.events})),finalStats:finalEquipStats(current,Number($('levelSlider').value),items)};
+ const data=new Blob([JSON.stringify(output,null,2)],{type:'application/json'});
+ const url=URL.createObjectURL(data);const a=document.createElement('a');a.href=url;a.download='ADN_'+current.gtin14+'_V0.6.4.json';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+
+function renderEquipmentRules(){
+ $('equipmentSlot').innerHTML=EQUIP_ORDER.map(s=>`<option value="${s}">${SLOT_NAMES[s]}</option>`).join('');
+ $('equipmentRules').innerHTML=EQUIP_ORDER.map(s=>`<tr><td class="row-name">${SLOT_NAMES[s]}</td><td class="label-wrap">${MAIN_POOLS[s].map(k=>formatAttribute(k,0).replace(' +0','')).join(', ')}</td><td>${MAIN_POOLS[s].length}</td></tr>`).join('');
+}
+function selectGearSlot(slot){
+ if(!MAIN_POOLS[slot])return;equipmentSelected=slot;renderGearUI();
+}
+function setGearEnhance(value){
+ if(!current)return;
+ equipmentLevels[equipmentSelected]=Math.max(0,Math.min(15,Math.trunc(Number(value)||0)));
+ renderGearUI();
+}
+
+
+// DAMAGE-V1: cálculo matemático separado del generador de ADN.
+// El poder del movimiento lo define su ficha, no la rareza ni un dado adicional.
+const DAMAGE_VERSION='DAMAGE-V1';
+const MOVE_LIBRARY=[
+ {id:'PHYS_01',name:'Golpe básico',kind:'physical',power:35},
+ {id:'PHYS_02',name:'Garra reptiliana',kind:'physical',power:60},
+ {id:'PHYS_03',name:'Embestida',kind:'physical',power:80},
+ {id:'PHYS_04',name:'Golpe sísmico',kind:'physical',power:110},
+ {id:'PHYS_05',name:'Ruptura física',kind:'physical',power:140},
+ {id:'MAG_01',name:'Pulso arcano',kind:'magical',power:35},
+ {id:'MAG_02',name:'Destello prismático',kind:'magical',power:60},
+ {id:'MAG_03',name:'Descarga eléctrica',kind:'magical',power:80},
+ {id:'MAG_04',name:'Tormenta arcana',kind:'magical',power:110},
+ {id:'MAG_05',name:'Ruptura elemental',kind:'magical',power:140}
+];
+function calculateMoveDamage({attackerLevel,movePower,attackStat,defenseStat,divisor=15}){
+ const args=[attackerLevel,movePower,attackStat,defenseStat,divisor];
+ if(!args.every(Number.isFinite)||attackerLevel<1||attackerLevel>60||movePower<1||attackStat<0||defenseStat<0||divisor<=0)throw Error('Valores de daño fuera de rango');
+ const effectiveDefense=Math.max(1,defenseStat);
+ const raw=1.1*((1.5*attackerLevel+20)*movePower*(attackStat/effectiveDefense))/divisor;
+ const damage=Math.max(1,Math.floor(raw));
+ if(!Number.isFinite(raw)||!Number.isSafeInteger(damage))throw Error('El daño calculado supera el rango permitido');
+ return {raw,damage,effectiveDefense};
+}
+function getDefenderBattleStats(gtin,level,gearMode,scalingMode='budget'){
+ const genome=makeGenome(gtin,null,scalingMode); // siempre rareza real del GTIN, sin sandbox
+ if(gearMode==='none')return {genome,stats:Object.fromEntries(STAT_NAMES.map(k=>[k,{base:statValue(genome,k,level),final:statValue(genome,k,level)}]))};
+ if(!['zero','max'].includes(gearMode))throw Error('Equipamiento rival inválido');
+ const enhance=gearMode==='max'?15:0;
+ const items=EQUIP_ORDER.map(slot=>itemAtEnhance(rollItemInstance(genome,slot,1),enhance));
+ return {genome,stats:finalEquipStats(genome,level,items).stats};
+}
+function buildCombatPreview({genome,attackerLevel,attackerGear,defenderGTIN,defenderLevel,defenderGear,moveId,movePower,divisor}){
+ const move=MOVE_LIBRARY.find(m=>m.id===moveId);
+ if(!move)throw Error('Movimiento desconocido');
+ const a=finalEquipStats(genome,attackerLevel,attackerGear).stats;
+ const d=getDefenderBattleStats(defenderGTIN,defenderLevel,defenderGear,genome.scalingMode);
+ const attackType=move.kind==='physical'?'ATK':'MAT';
+ const defenseType=move.kind==='physical'?'DEF':'MDF';
+ const attackStat=a[attackType].final,defenseStat=d.stats[defenseType].final;
+ const calculated=calculateMoveDamage({attackerLevel,movePower,attackStat,defenseStat,divisor});
+ const targetHP=d.stats.HP.final;
+ return {move,attackType,defenseType,attackStat,defenseStat,attackerLevel,defenderLevel,targetHP,defender:d.genome,divisor,movePower,...calculated,healthFraction:Math.min(1,calculated.damage/targetHP),hitsToKO:Math.ceil(targetHP/calculated.damage)};
+}
+function renderCombat(){
+ const output=$('combatResult');if(!output)return;
+ if(!current){output.innerHTML='<p class="combat-error">Generá un ADN válido para calcular el daño.</p>';return;}
+ try{
+  const level=Number($('levelSlider').value);
+  const enemyLevel=Number($('combatEnemyLevel').value);
+  const power=Number($('combatPower').value);
+  const divisor=Number($('combatDivisor').value);
+  if(!Number.isInteger(enemyLevel)||enemyLevel<1||enemyLevel>60)throw Error('El rival debe estar entre nivel 1 y 60.');
+  if(!Number.isInteger(divisor)||divisor<1||divisor>200)throw Error('El divisor debe estar entre 1 y 200.');
+  const result=buildCombatPreview({genome:current,attackerLevel:level,attackerGear:equipmentList(current),defenderGTIN:$('combatEnemyGTIN').value,defenderLevel:enemyLevel,defenderGear:$('combatEnemyGear').value,moveId:$('combatMove').value,movePower:power,divisor});
+  $('combatPowerLabel').textContent=String(power);
+  const percent=100*result.damage/result.targetHP;
+  output.innerHTML=`<div class="combat-card"><div class="combat-summary"><div><div class="overline">Daño base por impacto</div><div class="combat-n">${fmt(result.damage)}</div></div><div class="combat-badges"><span class="chip">${result.move.kind==='physical'?'Físico':'Mágico'}</span><span class="chip">${fmt(percent.toFixed(1))}% de HP</span><span class="chip">${result.hitsToKO===1?'KO en 1 golpe':result.hitsToKO+' golpes para KO'}</span></div></div><div class="combat-hp-track"><div class="drain" style="width:${(result.healthFraction*100).toFixed(2)}%"></div></div><div class="combat-stats"><div><small>${result.attackType} atacante</small><strong>${fmt(result.attackStat)}</strong></div><div><small>${result.defenseType} rival</small><strong>${fmt(result.defenseStat)}</strong></div><div><small>HP rival</small><strong>${fmt(result.targetHP)}</strong></div><div><small>Nivel atacante</small><strong>${result.attackerLevel}</strong></div><div><small>Move Power</small><strong>${result.movePower}</strong></div><div><small>Defensor · rareza</small><strong>${result.defender.tier.name}</strong></div></div><div class="combat-equation">⌊1,1 × ((1,5 × ${result.attackerLevel} + 20) × ${result.movePower} × (${fmt(result.attackStat)} / ${fmt(result.defenseStat)})) / ${result.divisor}⌋ = <b>${fmt(result.damage)}</b></div></div>`;
+ }catch(e){output.innerHTML=`<p class="combat-error">${e.message.replace(/[<>&]/g,'')}</p>`;}
+}
+function setupCombat(){
+ $('combatMove').innerHTML=MOVE_LIBRARY.map(m=>`<option value="${m.id}">${m.name} · ${m.kind==='physical'?'Físico':'Mágico'} · Poder ${m.power}</option>`).join('');
+ $('combatMove').value='PHYS_02';
+ $('combatPower').value=String(MOVE_LIBRARY.find(m=>m.id==='PHYS_02').power);
+ $('combatMove').addEventListener('change',()=>{const m=MOVE_LIBRARY.find(x=>x.id===$('combatMove').value);$('combatPower').value=String(m.power);renderCombat();});
+ ['combatPower','combatEnemyLevel','combatDivisor'].forEach(id=>$(id).addEventListener('input',renderCombat));
+ ['combatEnemyGTIN','combatEnemyGear'].forEach(id=>$(id).addEventListener('change',renderCombat));
+ $('combatEnemyGTIN').addEventListener('keydown',e=>{if(e.key==='Enter')renderCombat();});
+ $('combatSameGTIN').addEventListener('click',()=>{if(current){$('combatEnemyGTIN').value=current.input;renderCombat();}});
+}
+
+function renderStars(g){
+ const p=g?.perfection;
+ const stars=p?.stars??0;
+ $('starSummary').textContent=p?`${stars} / 7`:'— / 7';
+ $('starSymbols').innerHTML=Array.from({length:7},(_,i)=>`<span class="${i<stars?'lit':'off'}" aria-hidden="true">${i<stars?'★':'☆'}</span>`).join('');
+ $('starSymbols').setAttribute('aria-label',p?`${stars} estrellas de 7`:'Sin genoma calculado');
+ $('ivRollTotal').textContent=`Tiradas: ${p?p.rollSum:'—'} / 42`;
+ $('ivValueTotal').textContent=`IV totales: ${p?p.ivValueSum:'—'} / 300`;
+ $('ivRollTableTotal').textContent=p?p.rollSum:'—';
+ $('ivValueTableTotal').textContent=p?p.ivValueSum:'—';
+ $('ivMeterFill').style.width=p?`${((p.rollSum-6)/36*100).toFixed(3)}%`:'0%';
+ if(!p){$('starChance').textContent='Las estrellas dependen de las tiradas RNG_IVS y su distribución cambia por rareza.';$('sixPlusChance').textContent='—';$('perfectChance').textContent='—';$('starDistribution').innerHTML='';return;}
+ const distribution=TIER_STAR_DISTRIBUTIONS[g.tierIndex];
+ const currentPct=distribution.probabilities[stars-1]*100;
+ const pct=x=>`${(x*100).toLocaleString('es-AR',{minimumFractionDigits:2,maximumFractionDigits:5})}%`;
+ const threshold=stars===7?'Perfección absoluta: los seis RNG_IVS valen 7.':`La siguiente estrella comienza en suma ${Math.min(42,6*stars+6)}.`;
+ $('starChance').textContent=`Probabilidad teórica de ${stars} ★ con rareza ${g.tier.name}: ${pct(distribution.probabilities[stars-1])}. ${threshold}`;
+ $('sixPlusChance').textContent=pct(distribution.sixPlusProbability);
+ $('perfectChance').textContent=pct(distribution.perfectProbability);
+ const peak=Math.max(...distribution.probabilities);
+ $('starDistribution').innerHTML=distribution.probabilities.map((prob,i)=>`<div class="dist-cell" title="${i+1} estrellas: ${pct(prob)}"><div class="dist-track"><div class="dist-fill" style="height:${prob>0?Math.max(1.5,prob/peak*100):0}%"></div></div><div class="dist-label">${i+1} ★</div><div class="dist-pct">${prob>0&&prob*100<0.01?'<0,01%':`${(prob*100).toFixed(prob>0&&prob<0.1?2:1)}%`}</div></div>`).join('');
+}
+function renderGenome(){
+ const g=current;if(!g)return;
+ $('formatChip').textContent=g.format;
+ $('normalizedChip').textContent='GTIN-14: '+g.gtin14;
+ $('rarity').dataset.tier=String(g.tierIndex);
+ $('rarityName').textContent=g.tier.name;$('rarityName').style.color=g.tier.color;
+ $('rarityMultiplier').textContent='×'+g.tier.mult.toFixed(2);
+ $('rarityChance').textContent=(g.simulated?'SIMULACIÓN — real: '+TIERS[g.actualTierIndex].name+' · ':'')+'Probabilidad de rareza configurada: '+g.tier.pct;
+ $('sandboxNote').textContent=g.simulated?'SIMULACIÓN de rareza GENÉTICA: el equipamiento conserva su rareza real del hash y no depende de esta opción. Para el genoma auténtico, elegí «Rareza real derivada del GTIN».':'El valor seleccionado es el real derivado del GTIN. Podés seleccionar otra rareza para verificar cómo cambian los mínimos de IV y las estrellas.';
+ renderStars(g);
+ $('geneticBody').innerHTML=STAT_NAMES.map(k=>{const st=g.stats[k];return `<tr><td class="row-name" style="color:${COLORS[k]}">${k}</td><td>${st.rng}</td><td>${st.base}</td><td>${st.scaling}</td><td>${st.minIvRoll}</td><td>${st.ivRoll}</td><td>${st.iv}</td><td>${(COEFF_MILLI[k]/1000).toFixed(3).replace('.',',')}</td></tr>`;}).join('');
+ $('scalingVersionBadge').textContent=g.scalingVersion;
+ $('scalingSummary').textContent=`SCALING total: ${g.scalingBudget} · ${g.scalingMode==='budget'?'presupuesto fijo 560 · puntos individuales 50–150':'modelo anterior con parejas que suman 200'} · IV y RNG SCALE se calculan por separado.`;
+ $('scalingNote').textContent=g.scalingMode==='budget'?'DNA-V2: asigna 260 puntos uno a uno con predisposiciones distintas para cada atributo; la suma siempre es 560. Mantiene los mismos RNG, IV, rareza y piezas.':'DNA-V1: tres parejas opuestas de SCALING; se conservan exactamente los cálculos anteriores para comparar.';
+ $('levelTable').innerHTML=STAT_NAMES.map(k=>`<tr><td class="row-name" style="color:${COLORS[k]}">${k}</td><td>${fmt(statValue(g,k,1))}</td><td>${fmt(statValue(g,k,30))}</td><td>${fmt(statValue(g,k,60))}</td></tr>`).join('');
+ renderGearUI();
+ $('legend').innerHTML=STAT_NAMES.map(k=>`<span><i class="dot" style="background:${COLORS[k]}"></i>${k}</span>`).join('');
+ renderLevel();
+}
+function renderAttributeBars(){
+ if(!current)return;
+ const level=Number($('levelSlider').value);
+ const equipped=finalEquipStats(current,level,equipmentList(current)).stats;
+ const max=Math.max(...STAT_NAMES.map(k=>equipped[k].final));
+ $('statBars').innerHTML=STAT_NAMES.map(k=>{const base=statValue(current,k,level),total=equipped[k].final,bonus=total-base,pct=Math.max(2,total/max*100);return `<div class="stat-line"><div class="name" style="color:${COLORS[k]}">${k}</div><div class="track"><div class="fill" style="width:${pct}%;background:${COLORS[k]}"></div></div><div class="amount"><strong>${fmt(total)}</strong><small>${bonus?`+${fmt(bonus)} eq.`:`sin bono`}</small></div></div>`;}).join('');
+}
+function renderLevel(){
+ const l=Number($('levelSlider').value);$('levelLabel').textContent=String(l).padStart(2,'0');if(!current)return;
+ renderGearUI();
+ drawRadar();
+ drawChart();
+}
+function drawRadar(){
+ const canvas=$('radarChart');if(!canvas)return;
+ const rect=canvas.getBoundingClientRect();const w=Math.max(260,rect.width),h=Math.max(260,rect.height),dpr=Math.min(2,window.devicePixelRatio||1);
+ canvas.width=Math.floor(w*dpr);canvas.height=Math.floor(h*dpr);const ctx=canvas.getContext('2d');ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,w,h);
+ if(!current)return;
+ const values=RADAR_ORDER.map(stat=>current.stats[stat].scaling+current.stats[stat].iv);
+ const maxValue=Math.max(...values,120);const top=Math.ceil(maxValue/10)*10;
+ const cx=w/2,cy=h/2+8,r=Math.min(w,h)*0.31,steps=4;
+ const points=i=>{const ang=-Math.PI/2+i*(Math.PI*2/RADAR_ORDER.length);return {x:cx+Math.cos(ang)*r,y:cy+Math.sin(ang)*r,a:ang};};
+ for(let ring=1;ring<=steps;ring++){
+   ctx.beginPath();
+   RADAR_ORDER.forEach((_,i)=>{const p=points(i),x=cx+(p.x-cx)*(ring/steps),y=cy+(p.y-cy)*(ring/steps);if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);});
+   ctx.closePath();ctx.strokeStyle=ring===steps?'#324b61':'#223448';ctx.lineWidth=1;ctx.stroke();
+ }
+ RADAR_ORDER.forEach((stat,i)=>{const p=points(i);ctx.strokeStyle='#294259';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(p.x,p.y);ctx.stroke();
+   const lx=cx+Math.cos(p.a)*(r+28),ly=cy+Math.sin(p.a)*(r+20);
+   ctx.fillStyle=COLORS[stat];ctx.font='700 12px system-ui';ctx.textAlign=Math.abs(Math.cos(p.a))<0.2?'center':(Math.cos(p.a)>0?'left':'right');ctx.textBaseline=Math.abs(Math.sin(p.a))>0.88?(Math.sin(p.a)>0?'top':'bottom'):'middle';ctx.fillText(stat,lx,ly);
+   ctx.fillStyle='#dce9f7';ctx.font='600 11px system-ui';const vy=ly+(Math.sin(p.a)>0?13:-13);ctx.fillText(String(values[i]),lx,vy);
+ });
+ const poly=RADAR_ORDER.map((stat,i)=>{const ratio=values[i]/top,p=points(i);return {x:cx+(p.x-cx)*ratio,y:cy+(p.y-cy)*ratio};});
+ ctx.beginPath();poly.forEach((p,i)=>{if(i===0)ctx.moveTo(p.x,p.y);else ctx.lineTo(p.x,p.y);});ctx.closePath();
+ const grad=ctx.createLinearGradient(cx-r,cy-r,cx+r,cy+r);grad.addColorStop(0,'#6ce5d266');grad.addColorStop(1,'#4f7dff22');ctx.fillStyle=grad;ctx.fill();
+ ctx.strokeStyle='#81f0df';ctx.lineWidth=2.5;ctx.stroke();
+ poly.forEach((p,i)=>{ctx.beginPath();ctx.fillStyle=COLORS[RADAR_ORDER[i]];ctx.arc(p.x,p.y,4.2,0,Math.PI*2);ctx.fill();ctx.strokeStyle='#e7fbff';ctx.lineWidth=1.2;ctx.stroke();});
+ $('radarLegend').innerHTML='';
+}
+
+function drawChart(){
+ const canvas=$('growthChart');if(!canvas)return;
+ const rect=canvas.getBoundingClientRect();const w=Math.max(300,rect.width),h=Math.max(180,rect.height),dpr=Math.min(2,window.devicePixelRatio||1);
+ canvas.width=Math.floor(w*dpr);canvas.height=Math.floor(h*dpr);const ctx=canvas.getContext('2d');ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,w,h);
+ if(!current)return;
+ const pad={l:42,r:9,t:9,b:27},pw=w-pad.l-pad.r,ph=h-pad.t-pad.b;
+ const ymax=Math.max(...STAT_NAMES.map(k=>statValue(current,k,60)))*1.09;
+ ctx.textBaseline='middle';ctx.font='10px system-ui';
+ for(let i=0;i<=4;i++){const y=pad.t+i*ph/4;ctx.strokeStyle='#284057';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(pad.l,y);ctx.lineTo(w-pad.r,y);ctx.stroke();ctx.fillStyle='#8198b1';ctx.textAlign='right';ctx.fillText(fmt((1-i/4)*ymax),pad.l-7,y);}
+ for(const l of [1,15,30,45,60]){const x=pad.l+(l-1)/59*pw;ctx.textAlign='center';ctx.fillStyle='#8ca2ba';ctx.fillText(l,x,h-11);}
+ for(const k of STAT_NAMES){ctx.lineWidth=2;ctx.strokeStyle=COLORS[k];ctx.beginPath();for(let l=1;l<=60;l++){const x=pad.l+(l-1)/59*pw,y=pad.t+ph*(1-statValue(current,k,l)/ymax);if(l===1)ctx.moveTo(x,y);else ctx.lineTo(x,y);}ctx.stroke();}
+ const selected=Number($('levelSlider').value),x=pad.l+(selected-1)/59*pw;
+ ctx.setLineDash([4,4]);ctx.strokeStyle='#e5f1ff9a';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(x,pad.t);ctx.lineTo(x,pad.t+ph);ctx.stroke();ctx.setLineDash([]);
+}
+// CAMERA-V3: html5-qrcode 2.3.8 (CDN fijado en versión) con cámara y lectura de fotos.
+// Si no hay conexión o falla la biblioteca, se mantiene el lector local CAMERA-V2 de respaldo.
+const EAN_L=['0001101','0011001','0010011','0111101','0100011','0110001','0101111','0111011','0110111','0001011'];
+const EAN_G=['0100111','0110011','0011011','0100011','0011101','0111001','0000101','0010001','0001001','0010111'];
+const EAN_R=['1110010','1100110','1101100','1000010','1011100','1001110','1010000','1000100','1001000','1110100'];
+const EAN_PARITY=['LLLLLL','LLGLGG','LLGGLG','LLGGGL','LGLLGG','LGGLLG','LGGGLL','LGLGLG','LGLGGL','LGGLGL'];
+let scanDetector=null,scanLastTick=0;
+function readEANSequence(bits){
+ const str=bits.join('');
+ if(str.startsWith('101')&&str.endsWith('101')&&str.length===95&&str.slice(45,50)==='01010'){
+  let left='',parity='',right='';
+  for(let i=0;i<6;i++){
+   const part=str.slice(3+i*7,10+i*7);const l=EAN_L.indexOf(part),g=EAN_G.indexOf(part);
+   if(l>=0){left+=l;parity+='L';}else if(g>=0){left+=g;parity+='G';}else return null;
+  }
+  for(let i=0;i<6;i++){const v=EAN_R.indexOf(str.slice(50+i*7,57+i*7));if(v<0)return null;right+=v;}
+  const first=EAN_PARITY.indexOf(parity);if(first<0)return null;
+  const number=String(first)+left+right;
+  try{validate(number);return number;}catch(_){return null;}
+ }
+ if(str.startsWith('101')&&str.endsWith('101')&&str.length===67&&str.slice(31,36)==='01010'){
+  let number='';
+  for(let i=0;i<4;i++){const v=EAN_L.indexOf(str.slice(3+i*7,10+i*7));if(v<0)return null;number+=v;}
+  for(let i=0;i<4;i++){const v=EAN_R.indexOf(str.slice(36+i*7,43+i*7));if(v<0)return null;number+=v;}
+  try{validate(number);return number;}catch(_){return null;}
+ }
+ return null;
+}
+// Lee las 95/67 celdas utilizando las guardas del código y su ancho real.
+function decodeEANLine(dark){
+ const n=dark.length,runs=[];if(n<100)return null;
+ let start=0,last=dark[0];
+ for(let x=1;x<=n;x++){
+  const val=x===n?!last:dark[x];
+  if(val!==last){runs.push({start,end:x,len:x-start,v:last});start=x;last=val;}
+ }
+ for(let i=0;i<runs.length-5;i++){
+  const a=runs[i],b=runs[i+1],c=runs[i+2];
+  if(a.v!==1||b.v!==0||c.v!==1)continue;
+  const m=(a.len+b.len+c.len)/3;
+  if(m<1.6||m>33||Math.min(a.len,b.len,c.len)<m*.48||Math.max(a.len,b.len,c.len)>m*1.62)continue;
+  for(const size of [95,67]){
+   const expectedEnd=a.start+size*m;
+   if(expectedEnd>n+m*13)continue;
+   for(let j=i+3;j<runs.length-2;j++){
+    const u=runs[j],v=runs[j+1],w=runs[j+2];
+    if(u.start>expectedEnd+m*12)break;
+    if(u.v!==1||v.v!==0||w.v!==1)continue;
+    const mod=(w.end-a.start)/size;
+    if(Math.abs(mod-m)>m*.2||Math.abs(u.len-mod)>mod*.7||Math.abs(v.len-mod)>mod*.7||Math.abs(w.len-mod)>mod*.7)continue;
+    const bits=new Array(size);
+    for(let k=0;k<size;k++){
+     const x=Math.floor(a.start+(k+.5)*mod);
+     if(x<0||x>=n){bits.length=0;break;}
+     bits[k]=dark[x];
+    }
+    if(bits.length!==size)continue;
+    const number=readEANSequence(bits);
+    if(number)return number;
+   }
+  }
+ }
+ return null;
+}
+function decodeEANFromCanvas(canvas){
+ const w=canvas.width,h=canvas.height;
+ const ctx=canvas.getContext('2d',{willReadFrequently:true});
+ const positions=[.50,.45,.55,.40,.60,.35,.65,.30,.70,.25,.75,.20,.80,.15,.85];
+ for(const pct of positions){
+  const y=Math.max(0,Math.min(h-1,Math.floor(h*pct)));
+  const pixels=ctx.getImageData(0,y,w,1).data;
+  const grays=new Uint8Array(w),samples=[];
+  for(let x=0;x<w;x++){
+   const i=x*4;grays[x]=Math.round((pixels[i]*77+pixels[i+1]*150+pixels[i+2]*29)/256);
+   if(x%4===0)samples.push(grays[x]);
+  }
+  samples.sort((a,b)=>a-b);
+  const p10=samples[Math.floor(samples.length*.1)],p90=samples[Math.floor(samples.length*.9)];
+  if(p90-p10<35)continue;
+  const thresholds=[(p10+p90)/2,p10+(p90-p10)*.40,p10+(p90-p10)*.60];
+  for(const threshold of thresholds){
+   const dark=new Uint8Array(w);
+   for(let i=0;i<w;i++)dark[i]=grays[i]<threshold?1:0;
+   const decoded=decodeEANLine(dark);
+   if(decoded)return decoded;
+  }
+ }
+ return null;
+}
+function makeBarcodeCanvas(image,turn=0){
+ const baseW=image.videoWidth||image.naturalWidth||image.width,baseH=image.videoHeight||image.naturalHeight||image.height;
+ if(!baseW||!baseH)throw Error('La imagen no tiene dimensiones válidas.');
+ const ratio=Math.min(1,1600/Math.max(baseW,baseH)),w=Math.max(1,Math.round(baseW*ratio)),h=Math.max(1,Math.round(baseH*ratio));
+ const canvas=document.createElement('canvas');canvas.width=turn%2?h:w;canvas.height=turn%2?w:h;
+ const ctx=canvas.getContext('2d',{willReadFrequently:true});
+ ctx.translate(canvas.width/2,canvas.height/2);ctx.rotate(turn*Math.PI/2);ctx.drawImage(image,-w/2,-h/2,w,h);
+ return canvas;
+}
+function decodeEANImage(image){
+ for(let turn=0;turn<4;turn++){
+  const detected=decodeEANFromCanvas(makeBarcodeCanvas(image,turn));
+  if(detected)return detected;
+ }
+ return null;
+}
+async function nativeBarcodeDetector(){
+ if(!('BarcodeDetector' in window))return null;
+ try{
+  const formats=await BarcodeDetector.getSupportedFormats();const supported=['ean_13','ean_8','upc_a'].filter(f=>formats.includes(f));
+  return supported.length?new BarcodeDetector({formats:supported}):null;
+ }catch(_){return null;}
+}
+// QR permite el mismo GTIN que los EAN/UPC: dígitos puros, AI (01), o GS1 Digital Link /01/{GTIN-14}.
+// No se convierten QR arbitrarios a criaturas para mantener las reglas genéticas actuales.
+function gtinFromScannedText(raw){
+ const value=String(raw||'').trim();
+ if(/^\d{8}$|^\d{12,14}$/.test(value))return value;
+ const ai=value.match(/^\(01\)(\d{14})$/);
+ if(ai)return ai[1];
+ if(/^https?:\/\//i.test(value)){
+  try{const url=new URL(value);const match=url.pathname.match(/(?:^|\/)01\/(\d{14})(?:\/|$)/);if(match)return match[1];}catch(_){}
+ }
+ return value;
+}
+function acceptBarcode(value,source){
+ try{
+  const valid=validate(gtinFromScannedText(value));
+  $('gtinInput').value=valid.input;
+  stopCamera();
+  analyze();
+  showStatus(`Código ${valid.format} reconocido mediante ${source}: ${valid.input}. ADN generado correctamente.`);
+  return true;
+ }catch(_){return false;}
+}
+// El paquete upstream es Apache-2.0. Se carga al solicitar cámara o foto.
+// No se utiliza CDN para códigos de usuario ni se suben fotogramas; solo se descarga el JS.
+const HTML5_QRCODE_RELEASE='2.3.8';
+const HTML5_QRCODE_URLS=[
+ 'https://cdn.jsdelivr.net/npm/html5-qrcode@2.3.8/html5-qrcode.min.js',
+ 'https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js'
+];
+let html5LibraryPromise=null,html5Scanner=null,html5Running=false,html5Starting=false;
+let scannerGeneration=0,scannerStoppingPromise=Promise.resolve(),cameraStarting=false;
+function scanFormats(){
+ const f=window.Html5QrcodeSupportedFormats;
+ if(!f)return [];
+ return ['EAN_13','EAN_8','UPC_A','QR_CODE'].map(k=>f[k]).filter(v=>v!==undefined);
+}
+function makeHtml5Reader(id){
+ const options={verbose:false,useBarCodeDetectorIfSupported:false};
+ const formats=scanFormats();if(formats.length)options.formatsToSupport=formats;
+ return new window.Html5Qrcode(id,options);
+}
+function fetchLibraryScript(url,timeoutMs=4500){
+ return new Promise((resolve,reject)=>{
+  const el=document.createElement('script');let done=false;
+  const timer=setTimeout(()=>finish(new Error('Tiempo agotado al cargar la biblioteca')),timeoutMs);
+  function finish(error){
+   if(done)return;done=true;clearTimeout(timer);el.onload=null;el.onerror=null;
+   if(error){el.remove();reject(error);}else resolve();
+  }
+  el.src=url;el.async=true;el.crossOrigin='anonymous';
+  el.onload=()=>finish(window.Html5Qrcode?null:new Error('El script no expuso Html5Qrcode'));
+  el.onerror=()=>finish(new Error('No se pudo cargar '+url));
+  document.head.appendChild(el);
+ });
+}
+async function ensureHtml5Library(){
+ if(typeof window.Html5Qrcode==='function')return true;
+ if(!html5LibraryPromise){
+  html5LibraryPromise=(async()=>{
+   for(const url of HTML5_QRCODE_URLS){
+    try{await fetchLibraryScript(url);if(typeof window.Html5Qrcode==='function')return true;}
+    catch(_){/* probar el siguiente proveedor */}
+   }
+   return false;
+  })();
+ }
+ const ok=await html5LibraryPromise;
+ if(!ok)html5LibraryPromise=null; // Permite reintentar si vuelve la conectividad.
+ return ok;
+}
+function stopLegacyCamera(){
+ if(scanFrame)cancelAnimationFrame(scanFrame);scanFrame=null;
+ if(scanStream){scanStream.getTracks().forEach(t=>t.stop());scanStream=null;}
+ const video=$('cameraVideo');video.srcObject=null;video.hidden=true;
+ processingScan=false;scanDetector=null;
+}
+function stopCamera(){
+ scannerGeneration++;
+ stopLegacyCamera();
+ cameraStarting=false;
+ $('scanBtn').disabled=false;
+ $('cameraPanel').hidden=true;
+ const inst=html5Scanner;
+ if(inst){
+  html5Scanner=null;
+  const wasRunning=html5Running;
+  html5Running=false;
+  // Serializar el cierre evita usar scanFile y cámara simultáneamente.
+  scannerStoppingPromise=Promise.resolve(scannerStoppingPromise).catch(()=>{}).then(async()=>{
+   if(wasRunning){try{await inst.stop();}catch(_){}}
+   try{inst.clear();}catch(_){}
+  });
+ }
+ return scannerStoppingPromise;
+}
+function cameraFailure(e){
+ // html5-qrcode can reject with strings, Error, DOMException or nested errors.
+ const raw=typeof e==='string'?e:String(e?.message||e||'Error desconocido');
+ const name=String(e?.name||raw.match(/\b(NotAllowedError|PermissionDeniedError|NotReadableError|NotFoundError|OverconstrainedError|SecurityError|AbortError)\b/)?.[1]||'Error');
+ const denied=/NotAllowedError|PermissionDeniedError|permission denied|permission dismissed|denied by system|access is denied/i.test(name+' '+raw);
+ const insecure=!window.isSecureContext;
+ const policy=(document.permissionsPolicy||document.featurePolicy);
+ let blockedByPolicy=false;
+ try{blockedByPolicy=!!policy?.allowsFeature&&!policy.allowsFeature('camera');}catch(_){}
+ return {name,raw:raw.slice(0,230),denied,insecure,blockedByPolicy};
+}
+function scannerError(e){
+ const x=cameraFailure(e);
+ if(x.insecure)return `El contexto de esta página no es seguro (${location.protocol}). Usá una página HTTPS abierta directamente en Chrome/Safari. Error: ${x.name}: ${x.raw}`;
+ if(x.blockedByPolicy)return `Esta vista incrustada bloquea la cámara por Permissions Policy, aunque no hayas rechazado ningún permiso. Abrí la página fuera de esa vista. Error: ${x.name}: ${x.raw}`;
+ const explanations={
+  NotFoundError:'No se encontró una cámara compatible.',
+  NotReadableError:'El navegador detectó la cámara pero no pudo iniciarla (quizá otra aplicación la está usando).',
+  OverconstrainedError:'La configuración de cámara no es compatible.',
+  AbortError:'La apertura de cámara fue interrumpida.'
+ };
+ const advice=x.denied?'El navegador/Android o el contenedor impidió transmitir video. No significa necesariamente que hayas tocado «Denegar». Si no apareció el cartel, comprobá HTTPS, que no estés en una vista previa/iframe y Configuración de sitios → Cámara en Chrome.':(explanations[x.name]||'No se pudo iniciar el lector. Probá el test de acceso directo para distinguir biblioteca y navegador.');
+ return `${advice} [${x.name}: ${x.raw}]`;
+}
+async function startHtml5Camera(token){
+ await scannerStoppingPromise.catch(()=>{});
+ if(token!==scannerGeneration)return false;
+ const scanner=makeHtml5Reader('html5Reader');
+ html5Scanner=scanner;html5Starting=true;
+ $('cameraPanel').hidden=false;
+ $('cameraVideo').hidden=true;
+ $('scannerHint').textContent='Apuntá al EAN/UPC con la cámara trasera. El escáner se cierra automáticamente al reconocer un código válido.';
+ const viewConfig={
+  fps:9,
+  qrbox:(w,h)=>{
+   const bw=Math.max(100,Math.min(420,Math.round(w*.90)));
+   const bh=Math.max(55,Math.min(200,Math.round(h*.52)));
+   return {width:Math.min(bw,w),height:Math.min(bh,h)};
+  }
+ };
+ let claimed=false;
+ try{
+  await scanner.start({facingMode:'environment'},viewConfig,(decoded)=>{
+   if(claimed||token!==scannerGeneration)return;
+   if(acceptBarcode(decoded,'html5-qrcode'))claimed=true;
+  },()=>{/* Un fotograma sin resultado es normal. */});
+  html5Starting=false;
+  if(token!==scannerGeneration){
+   // Si el usuario cerró durante el permiso, apagar ahora la cámara recién abierta.
+   try{await scanner.stop();}catch(_){}
+   try{scanner.clear();}catch(_){}
+   if(html5Scanner===scanner)html5Scanner=null;
+   return true;
+  }
+  html5Running=true;
+  showStatus('Escáner html5-qrcode activo. Centrá un EAN/UPC, mantené el código enfocado y esperá la detección.');
+  return true;
+ }catch(e){
+  html5Starting=false;
+  if(html5Scanner===scanner)html5Scanner=null;
+  try{scanner.clear();}catch(_){}
+  $('cameraPanel').hidden=true;
+  const failure=cameraFailure(e);
+  if(!failure.insecure&&!failure.blockedByPolicy&&!failure.denied && token===scannerGeneration){
+   showStatus(`El lector especializado falló: ${failure.name}. Intentando el lector alternativo con configuración sencilla…`, 'warn');
+   await startLegacyCamera(token);
+  }else{
+   showStatus(scannerError(e)+' También podés usar «Tomar foto».','warn');
+  }
+  return true;
+ }
+}
+async function startLegacyCamera(token){
+ if(token!==scannerGeneration)return;
+ try{
+  scanStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'},width:{ideal:1280},height:{ideal:720}},audio:false});
+  if(token!==scannerGeneration){stopLegacyCamera();return;}
+  scanDetector=await nativeBarcodeDetector();
+  $('cameraPanel').hidden=false;
+  $('cameraVideo').hidden=false;
+  $('cameraVideo').srcObject=scanStream;
+  await $('cameraVideo').play();
+  if(token!==scannerGeneration){stopLegacyCamera();return;}
+  showStatus('Lector local alternativo activo (no se pudo descargar html5-qrcode). Apuntá al código EAN/UPC o usá «Tomar foto».','warn');
+  scanLastTick=0;
+  async function scan(now){
+   if(!scanStream||token!==scannerGeneration)return;
+   if(!processingScan&&now-scanLastTick>=380){
+    processingScan=true;scanLastTick=now;
+    try{
+     const video=$('cameraVideo');let number=null;
+     if(video.readyState>=2){
+      if(scanDetector){
+       try{const codes=await scanDetector.detect(video);number=codes.find(c=>{try{validate(c.rawValue);return true;}catch(_){return false;}})?.rawValue||null;}
+       catch(_){scanDetector=null;}
+      }
+      if(!number)number=decodeEANFromCanvas(makeBarcodeCanvas(video));
+     }
+     if(token===scannerGeneration&&number&&acceptBarcode(number,scanDetector?'lector nativo':'lector integrado'))return;
+    }catch(_){/* ignorar fotogramas ilegibles */}
+    finally{processingScan=false;}
+   }
+   if(scanStream&&token===scannerGeneration)scanFrame=requestAnimationFrame(scan);
+  }
+  scanFrame=requestAnimationFrame(scan);
+ }catch(e){
+  stopCamera();showStatus(scannerError(e)+' Podés utilizar «Tomar foto».','warn');
+ }
+}
+async function startCamera(){
+ if(photoBusy){showStatus('Se está analizando una fotografía. Terminá ese proceso antes de abrir la cámara.','warn');return;}
+ if(cameraStarting||html5Running||html5Starting||scanStream){stopCamera();return;}
+ if(!window.isSecureContext){
+  showStatus(`No se puede solicitar el permiso: el origen ${location.protocol} no es un contexto seguro. Abrí el juego directamente en Chrome/Safari desde HTTPS (no una vista previa). «Tomar foto» funciona de otra forma.`, 'warn');return;
+ }
+ const cameraPolicy=document.permissionsPolicy||document.featurePolicy;
+ try{
+  if(cameraPolicy?.allowsFeature&&!cameraPolicy.allowsFeature('camera')){
+   showStatus('El contenedor de esta página BLOQUEA la cámara mediante Permissions Policy: no puede aparecer el cartel de permiso. Abrí el juego directamente en una pestaña HTTPS de Chrome/Safari.','warn');return;
+  }
+ }catch(_){}
+ if(!navigator.mediaDevices?.getUserMedia){
+  showStatus('getUserMedia no está disponible en este navegador/visor. Abrí la URL HTTPS directamente en Chrome/Safari; «Tomar foto» puede funcionar aunque la cámara en vivo esté bloqueada.','warn');return;
+ }
+ const token=++scannerGeneration;
+ cameraStarting=true;$('scanBtn').disabled=true;
+ showStatus('Solicitando autorización de cámara al navegador…', 'warn');
+ let firstStream=null;
+ try{
+  // IMPORTANT: invocar la API dentro de la acción del usuario, ANTES de awaits y descargas.
+  // El aviso nativo aparece solo si el navegador permite solicitar el permiso para este origen.
+  const request=navigator.mediaDevices.getUserMedia({audio:false,video:true});
+  firstStream=await request;
+  firstStream.getTracks().forEach(track=>track.stop());firstStream=null;
+  if(token!==scannerGeneration)return;
+  showStatus('Acceso a cámara concedido. Preparando lector EAN/UPC/QR…','warn');
+  await scannerStoppingPromise.catch(()=>{});
+  const available=await ensureHtml5Library();
+  if(token!==scannerGeneration)return;
+  if(available)await startHtml5Camera(token);
+  else await startLegacyCamera(token);
+ }catch(e){
+  if(token===scannerGeneration){
+   $('cameraPanel').hidden=true;
+   showStatus('No se pudo abrir el vídeo: '+scannerError(e)+' Revisá Ajustes de Chrome → Configuración de sitios → Cámara y los permisos de Android.','warn');
+  }
+ }finally{
+  if(firstStream){try{firstStream.getTracks().forEach(track=>track.stop());}catch(_){}}
+  if(token===scannerGeneration){cameraStarting=false;$('scanBtn').disabled=false;}
+ }
+}
+async function readLocalPhoto(file){
+ const url=URL.createObjectURL(file);const img=new Image();
+ try{
+  await new Promise((resolve,reject)=>{img.onload=resolve;img.onerror=()=>reject(new Error('Imagen ilegible'));img.src=url;});
+  const detector=await nativeBarcodeDetector();
+  if(detector){try{const matches=await detector.detect(img);const found=matches.find(x=>{try{validate(x.rawValue);return true;}catch(_){return false;}});if(found)return found.rawValue;}catch(_){}}
+  return decodeEANImage(img);
+ }finally{URL.revokeObjectURL(url);}
+}
+let photoBusy=false;
+async function scanBarcodePhoto(input){
+ const file=input.files&&input.files[0];input.value='';if(!file||photoBusy)return;
+ photoBusy=true;
+ await stopCamera();
+ showStatus('Analizando fotografía EAN/UPC…','warn');
+ try{
+  let value=null,source='lector local';
+  if(await ensureHtml5Library()){
+   const photoReader=makeHtml5Reader('html5PhotoReader');
+   try{
+    value=await photoReader.scanFile(file,true);
+    source='html5-qrcode (fotografía)';
+   }catch(_){/* El escáner puede fallar si la imagen está borrosa; probar respaldo. */}
+   finally{try{photoReader.clear();}catch(_){}}
+  }
+  if(value){try{validate(gtinFromScannedText(value));}catch(_){value=null;}}
+  if(!value)value=await readLocalPhoto(file);
+  if(!value||!acceptBarcode(value,source)){
+   showStatus('No se pudo reconocer un EAN-13/EAN-8/UPC-A válido. Incluí todas las barras, acercá la cámara, enfocá y evitá reflejos.','warn');
+  }
+ }catch(e){showStatus('No pude abrir la fotografía: '+(e.message||String(e)),'warn');}
+ finally{photoBusy=false;}
+}
+async function cameraCapabilities(){
+ const policy=document.permissionsPolicy||document.featurePolicy;
+ let policyStatus='desconocida';
+ try{if(policy?.allowsFeature)policyStatus=policy.allowsFeature('camera')?'permitida':'bloqueada';}catch(_){}
+ let permission='no consultable';
+ try{if(navigator.permissions?.query)permission=(await navigator.permissions.query({name:'camera'})).state;}catch(_){}
+ return {protocol:location.protocol,secure:window.isSecureContext,topLevel:window.self===window.top,
+  media:!!navigator.mediaDevices?.getUserMedia,policy:policyStatus,permission};
+}
+async function cameraDiagnostics(){
+ const c=await cameraCapabilities();
+ const native='BarcodeDetector' in window?'sí':'no';
+ const specialized=typeof window.Html5Qrcode==='function'?'cargada':html5LibraryPromise?'cargando':'no cargada (requiere Internet)';
+ const advice=!c.secure?'Abrí una URL HTTPS en Chrome o Safari.':c.policy==='bloqueada'||!c.topLevel?'Abrí el HTML fuera de un visor/iframe; el contenedor podría bloquear la cámara.':c.permission==='denied'?'Revisá permisos del sitio en el navegador.':'Pulsá «Probar acceso en vivo» para conocer el error real de getUserMedia.';
+ showStatus(`Cámara: protocolo ${c.protocol}; contexto ${c.secure?'seguro':'no seguro'}; ${c.topLevel?'página principal':'vista incrustada'}; getUserMedia ${c.media?'disponible':'ausente'}; permiso navegador ${c.permission}; política cámara ${c.policy}; BarcodeDetector ${native}; html5-qrcode ${specialized}. ${advice}`,'warn');
+ return c;
+}
+let directProbeBusy=false;
+async function probeDirectCamera(){
+ if(directProbeBusy)return;
+ directProbeBusy=true;const button=$('permissionTestBtn');button.disabled=true;
+ try{
+  const c=await cameraCapabilities();
+  if(!c.media){showStatus('PRUEBA DIRECTA: getUserMedia no está disponible aquí. Abrí la página en Chrome/Safari desde HTTPS. La opción «Tomar foto» puede seguir funcionando porque utiliza otro mecanismo.','warn');return false;}
+  if(!c.secure){showStatus('PRUEBA DIRECTA: contexto no seguro. La página necesita HTTPS (o localhost). El hecho de poder tomar fotos no concede acceso al vídeo en vivo.','warn');return false;}
+  let stream=null;
+  try{
+   stream=await navigator.mediaDevices.getUserMedia({audio:false,video:true});
+   showStatus('PRUEBA DIRECTA CORRECTA: getUserMedia abrió la cámara y la cerró inmediatamente. Si «Cámara en vivo» falla, el problema está en la configuración o en el lector html5-qrcode.');
+   return true;
+  }catch(e){
+   showStatus('PRUEBA DIRECTA FALLIDA: '+scannerError(e)+' «Tomar foto» usa otro mecanismo.','warn');
+   return false;
+  }finally{if(stream)stream.getTracks().forEach(t=>t.stop());}
+ }finally{directProbeBusy=false;button.disabled=false;}
+}
+$('analyzeBtn').addEventListener('click',analyze);
+$('gtinInput').addEventListener('keydown',e=>{if(e.key==='Enter')analyze();});
+$('randomBtn').addEventListener('click',()=>{$('gtinInput').value=makeRandomGTIN();analyze();showStatus('Código matemáticamente válido generado para pruebas. No representa necesariamente un producto comercial real.','warn');});
+$('exampleBtn').addEventListener('click',()=>{$('gtinInput').value='012345000058';analyze();});
+$('scanBtn').addEventListener('click',startCamera);
+$('captureBarcodeFile').addEventListener('change',e=>scanBarcodePhoto(e.target));
+$('uploadBarcodeFile').addEventListener('change',e=>scanBarcodePhoto(e.target));
+$('cameraInfoBtn').addEventListener('click',cameraDiagnostics);
+$('permissionTestBtn').addEventListener('click',probeDirectCamera);
+$('exportBtn').addEventListener('click',exportCreatureJSON);
+$('tierSandbox').addEventListener('change',analyze);
+$('scalingMode').addEventListener('change',analyze);
+$('closeCamera').addEventListener('click',stopCamera);
+$('levelSlider').addEventListener('input',renderLevel);
+$('equipmentSlot').addEventListener('change',e=>selectGearSlot(e.target.value));
+$('equipmentEnhance').addEventListener('input',e=>setGearEnhance(e.target.value));
+$('equipmentCopy').addEventListener('change',e=>{const n=Number(e.target.value);if(!Number.isInteger(n)||n<1||n>1000000){showStatus('La copia simulada debe estar entre 1 y 1000000.','warn');renderGearUI();return;}equipmentCopies[equipmentSelected]=n;renderGearUI();});
+$('nextCopyBtn').addEventListener('click',()=>{equipmentCopies[equipmentSelected]=equipmentCopies[equipmentSelected]%1000000+1;renderGearUI();});
+$('allZeroBtn').addEventListener('click',()=>{for(const k of EQUIP_ORDER)equipmentLevels[k]=0;renderGearUI();});
+$('allMaxBtn').addEventListener('click',()=>{for(const k of EQUIP_ORDER)equipmentLevels[k]=15;renderGearUI();});
+document.querySelectorAll('[data-enhance]').forEach(b=>b.addEventListener('click',()=>setGearEnhance(b.dataset.enhance)));
+$('parts').addEventListener('click',e=>{const part=e.target.closest('[data-gear-slot]');if(part)selectGearSlot(part.dataset.gearSlot);});
+$('parts').addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){const part=e.target.closest('[data-gear-slot]');if(part){e.preventDefault();selectGearSlot(part.dataset.gearSlot);}}});
+window.addEventListener('resize',()=>{drawRadar();drawChart();});
+window.addEventListener('pagehide',stopCamera);
+document.addEventListener('visibilitychange',()=>{if(document.hidden&&!cameraStarting&&!html5Starting&&!directProbeBusy)stopCamera();});
+renderEquipmentRules();
+setupCombat();
+window.CombatLabTest={MOVE_LIBRARY,DAMAGE_VERSION,calculateMoveDamage,getDefenderBattleStats,buildCombatPreview};
+window.EquipmentLabTest={MAIN_POOLS,MAIN_VALUES,SUB_RANGES,SUBSTAT_TYPES,makeGearBlueprint,rollItemInstance,itemAtEnhance,mainValue,gearBonuses,finalEquipStats,EQUIP_ORDER,EQUIP_VERSION};
+window.BarcodeScanTest={readEANSequence,decodeEANLine,decodeEANImage,makeBarcodeCanvas,gtinFromScannedText,scanFormats,makeHtml5Reader,ensureHtml5Library,startCamera,stopCamera,scanBarcodePhoto,cameraDiagnostics,probeDirectCamera,cameraCapabilities,cameraFailure};
+window.GeneticLabTest={sha256,hashHex,validate,makeGenome,generateBudgetScaling,SCALING_BUDGET,statValue,checkDigit,FORMULA_VERSION,COEFF_MILLI,STAR_VERSION,starsFromRolls,STAR_PROBABILITIES,IV_GENERATION_VERSION,IV_MIN_BY_TIER,starDistributionForTier,TIER_STAR_DISTRIBUTIONS};
+analyze();
+</script>
+</body>
+</html>
